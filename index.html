@@ -1,0 +1,3883 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Присмерк D&D 2024 — Помічник Столу</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<style>
+  :root {
+    --obsidian-desk: #120c09;
+    --mahogany-deep: #1c100b;
+    --mahogany-mid: #2f1911;
+    --parchment-bright: #fcf7eb;
+    --parchment-base: #f5ebd6;
+    --parchment-aged: #e9d9bc;
+    --parchment-deep: #d5be96;
+    --ink: #21140d;
+    --ink-soft: #4c3626;
+    --ink-muted: #765c45;
+    --crimson: #871c19;
+    --crimson-dark: #4f0e0c;
+    --gold: #a97b28;
+    --gold-bright: #e4b65a;
+    --gold-glow: rgba(228, 182, 90, 0.58);
+    --emerald: #1c5e3a;
+    --emerald-bg: #dff0e6;
+    --danger: #8f1b1b;
+    --danger-bg: #f7dede;
+    --navy: #1b3b59;
+    --border-brass: #7a5836;
+  }
+
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    margin: 0;
+    padding: 14px 10px 34px;
+    background-color: var(--obsidian-desk);
+    background-image:
+      radial-gradient(ellipse at 50% 8%, rgba(228, 182, 90, 0.16), transparent 55%),
+      radial-gradient(circle at 12% 88%, rgba(135, 28, 25, 0.18), transparent 48%),
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 16px);
+    color: var(--ink);
+    font-family: 'Lora', Georgia, serif;
+    min-height: 100vh;
+    line-height: 1.44;
+  }
+
+  @media (max-width: 640px) {
+    body { padding: 4px 2px 22px; }
+  }
+
+  /* =========================================================================
+     LEATHER & GILDED TOME BINDING
+     ========================================================================= */
+  .tome-shell {
+    max-width: 1140px;
+    margin: 0 auto;
+    background: linear-gradient(155deg, var(--mahogany-mid) 0%, var(--mahogany-deep) 55%, #120906 100%);
+    border: 3px solid #785226;
+    border-radius: 20px;
+    padding: 13px;
+    box-shadow:
+      0 28px 75px rgba(0, 0, 0, 0.9),
+      inset 0 0 0 2px rgba(228, 182, 90, 0.36),
+      inset 0 0 42px rgba(0, 0, 0, 0.85);
+    position: relative;
+  }
+
+  @media (max-width: 640px) {
+    .tome-shell { padding: 6px; border-radius: 13px; }
+  }
+
+  .corner-ornament {
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    border: 3px solid var(--gold-bright);
+    pointer-events: none;
+    z-index: 20;
+    opacity: 0.92;
+  }
+  .co-tl { top: 6px; left: 6px; border-right: none; border-bottom: none; border-top-left-radius: 14px; }
+  .co-tr { top: 6px; right: 6px; border-left: none; border-bottom: none; border-top-right-radius: 14px; }
+  .co-bl { bottom: 6px; left: 6px; border-right: none; border-top: none; border-bottom-left-radius: 14px; }
+  .co-br { bottom: 6px; right: 6px; border-left: none; border-top: none; border-bottom-right-radius: 14px; }
+
+  .parchment-sheet {
+    background-color: var(--parchment-base);
+    background-image:
+      radial-gradient(ellipse at 15% 6%, rgba(255, 253, 248, 0.85), transparent 52%),
+      radial-gradient(ellipse at 85% 94%, rgba(213, 190, 150, 0.72), transparent 60%),
+      repeating-linear-gradient(0deg, transparent, transparent 31px, rgba(122, 88, 54, 0.04) 32px);
+    border-radius: 12px;
+    border: 2px solid #593b22;
+    box-shadow:
+      inset 0 0 36px rgba(89, 59, 34, 0.3),
+      0 3px 14px rgba(0, 0, 0, 0.5);
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+  }
+
+  h1, h2, h3, h4, .serif-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    letter-spacing: 0.02em;
+    margin: 0;
+  }
+
+  .drop-cap::first-letter {
+    float: left;
+    font-family: 'Cinzel Decorative', Georgia, serif;
+    font-size: 38px;
+    line-height: 0.85;
+    padding: 4px 8px 2px 0;
+    color: var(--crimson);
+    text-shadow: 1px 1px 0 var(--gold-bright);
+  }
+
+  /* =========================================================================
+     CLASP HEADER
+     ========================================================================= */
+  .tome-header {
+    background: linear-gradient(180deg, #321810 0%, #1d0d08 100%);
+    color: #f8edd8;
+    padding: 12px 18px;
+    border-bottom: 3px double var(--gold-bright);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .brand-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .wax-seal {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 32% 28%, #c7302b, #6e120f 72%, #3a0706 100%);
+    border: 2px solid var(--gold-bright);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.65), inset 0 0 8px rgba(255, 224, 158, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cinzel Decorative', serif;
+    font-weight: 900;
+    font-size: 15px;
+    color: #fff3d6;
+    flex-shrink: 0;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.85);
+  }
+
+  .brand-group h1 {
+    font-family: 'Cinzel Decorative', 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #fcf2de;
+    line-height: 1.12;
+  }
+
+  .brand-sub {
+    font-size: 11px;
+    color: #d9c298;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    background: rgba(255, 248, 231, 0.08);
+    border: 1px solid rgba(228, 182, 90, 0.55);
+    color: #f7e9cc;
+  }
+
+  .gem-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #8c7b6b;
+  }
+  .gem-dot.ok { background: #4cd987; box-shadow: 0 0 8px #4cd987; }
+  .gem-dot.wait { background: #eeb73e; }
+  .gem-dot.err { background: #e65353; }
+
+  /* =========================================================================
+     BUTTONS & CONTROLS
+     ========================================================================= */
+  .btn {
+    font-family: 'Lora', Georgia, serif;
+    font-weight: 600;
+    font-size: 13.5px;
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: 1.5px solid var(--border-brass);
+    background: linear-gradient(180deg, #fffef9 0%, #efe0c4 100%);
+    color: var(--ink);
+    cursor: pointer;
+    transition: transform 0.08s ease, box-shadow 0.16s ease, filter 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    box-shadow: 0 2px 5px rgba(34, 21, 14, 0.16);
+    user-select: none;
+  }
+
+  .btn:hover:not(:disabled) {
+    filter: brightness(1.04);
+    box-shadow: 0 4px 11px rgba(34, 21, 14, 0.25);
+  }
+
+  .btn:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+
+  .btn:disabled {
+    opacity: 0.42;
+    cursor: not-allowed;
+    filter: grayscale(0.5);
+  }
+
+  .btn-crimson {
+    background: linear-gradient(180deg, #a62621 0%, #6e1411 100%);
+    color: #fdf6e9;
+    border-color: #3d0806;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.45);
+  }
+
+  .btn-gold {
+    background: linear-gradient(180deg, #c99838 0%, #8f651c 100%);
+    color: #fffbf2;
+    border-color: #4f360b;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+  }
+
+  .btn-emerald {
+    background: linear-gradient(180deg, #277549 0%, #174d2f 100%);
+    color: #f4fbf7;
+    border-color: #0d2e1b;
+  }
+
+  .btn-sm { padding: 5px 11px; font-size: 12.5px; }
+  .btn-xs { padding: 4px 8px; font-size: 11.5px; }
+
+  input, select, textarea {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 14px;
+    color: var(--ink);
+    background: #fffdf8;
+    border: 1.5px solid #8a6847;
+    border-radius: 5px;
+    padding: 7px 10px;
+    width: 100%;
+    box-shadow: inset 0 1px 3px rgba(34, 21, 14, 0.09);
+  }
+
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--crimson);
+    box-shadow: 0 0 0 2px rgba(135, 28, 25, 0.18);
+  }
+
+  input:disabled, select:disabled, textarea:disabled {
+    background: var(--parchment-aged);
+    color: var(--ink-soft);
+    border-color: #9e8468;
+  }
+
+  label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    margin-bottom: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* =========================================================================
+     TWO-PAGE BOOK SPREAD LOBBY
+     ========================================================================= */
+  .lobby-spread {
+    padding: 20px 18px 34px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .folio-title-banner {
+    text-align: center;
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 2px double #9a774e;
+  }
+
+  .folio-title-banner h2 {
+    font-family: 'Cinzel Decorative', 'Cormorant Garamond', serif;
+    font-size: 27px;
+    font-weight: 700;
+    color: var(--crimson-dark);
+    line-height: 1.15;
+  }
+
+  .folio-title-banner p {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin: 6px auto 0;
+    max-width: 650px;
+    font-style: italic;
+  }
+
+  .open-book {
+    display: grid;
+    grid-template-columns: 1.16fr 0.84fr;
+    background: var(--parchment-bright);
+    border: 2px solid #735234;
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(34, 21, 14, 0.25);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .open-book::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 58%;
+    width: 28px;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, transparent, rgba(54, 34, 18, 0.16) 42%, rgba(28, 17, 9, 0.34) 50%, rgba(54, 34, 18, 0.16) 58%, transparent);
+    pointer-events: none;
+    z-index: 4;
+  }
+
+  .bookmark-ribbon {
+    position: absolute;
+    top: 0;
+    left: 58%;
+    transform: translateX(-50%);
+    width: 14px;
+    height: 46px;
+    background: linear-gradient(180deg, #9e1e1b 0%, #6e1210 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 78%, 0 100%);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  @media (max-width: 760px) {
+    .open-book { grid-template-columns: 1fr; }
+    .open-book::before, .bookmark-ribbon { display: none; }
+  }
+
+  .page-left {
+    padding: 20px 24px 20px 18px;
+    background: linear-gradient(90deg, #f7eed8 0%, #fcf7ea 92%, #eedec0 100%);
+    border-right: 1px solid #b3936c;
+  }
+
+  .page-right {
+    padding: 20px 18px 20px 24px;
+    background: linear-gradient(270deg, #f5ead2 0%, #fbf5e6 92%, #ecdec2 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  @media (max-width: 760px) {
+    .page-left {
+      border-right: none;
+      border-bottom: 2px dashed #9a7952;
+      padding: 16px;
+    }
+    .page-right { padding: 16px; }
+  }
+
+  .kicker-lbl {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  .preset-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin: 10px 0 14px;
+  }
+
+  @media (max-width: 540px) {
+    .preset-grid { grid-template-columns: 1fr; }
+  }
+
+  .preset-tile {
+    text-align: left;
+    padding: 9px 10px;
+    border: 1.5px solid #8a6847;
+    border-radius: 8px;
+    background: linear-gradient(180deg, #fffdf8 0%, #f0e1c4 100%);
+    cursor: pointer;
+    transition: all 0.16s ease;
+  }
+
+  .preset-tile.active {
+    background: linear-gradient(180deg, #fff8e6 0%, #ebd09b 100%);
+    border-color: var(--crimson);
+    box-shadow: 0 0 0 2px rgba(135, 28, 25, 0.25), 0 4px 12px rgba(34, 21, 14, 0.18);
+  }
+
+  .preset-tile strong {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17.5px;
+    color: var(--crimson-dark);
+  }
+
+  .preset-tile span {
+    font-size: 11.5px;
+    color: var(--ink-soft);
+  }
+
+  /* =========================================================================
+     BOOKMARK TABS
+     ========================================================================= */
+  .tabs-bar {
+    display: flex;
+    background: linear-gradient(180deg, #dcc59e 0%, #c8ad80 100%);
+    border-bottom: 2px solid #6b4d32;
+    padding: 8px 12px 0;
+    gap: 6px;
+    overflow-x: auto;
+  }
+
+  .bm-tab {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    font-size: 18px;
+    padding: 8px 15px;
+    border: 1.5px solid #6b4d32;
+    border-bottom: none;
+    border-radius: 9px 9px 0 0;
+    background: linear-gradient(180deg, #efe0c4 0%, #decba6 100%);
+    color: var(--ink-soft);
+    cursor: pointer;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s ease;
+  }
+
+  .bm-tab.active {
+    background: var(--parchment-base);
+    color: var(--crimson);
+    position: relative;
+    top: 2px;
+    padding-bottom: 10px;
+    border-top: 3px solid var(--crimson);
+    box-shadow: 0 -3px 8px rgba(34, 21, 14, 0.14);
+  }
+
+  .badge-pill {
+    font-family: 'Lora', serif;
+    font-size: 11px;
+    padding: 1px 6px;
+    border-radius: 999px;
+    background: var(--crimson);
+    color: #fff;
+  }
+
+  .workspace {
+    padding: 16px;
+    flex: 1;
+  }
+
+  /* Initiative Strip */
+  .init-ribbon {
+    background: #29160f;
+    color: #f7e9cc;
+    padding: 7px 14px;
+    border-bottom: 1.5px solid var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow-x: auto;
+    font-size: 12.5px;
+  }
+
+  .init-token {
+    padding: 3px 9px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(228, 182, 90, 0.42);
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .init-token.active-turn {
+    background: var(--gold-bright);
+    color: #1c100a;
+    font-weight: 700;
+    border-color: #fff5db;
+  }
+
+  /* Illuminated Folio Box */
+  .folio-box {
+    background: var(--parchment-bright);
+    border: 1.5px solid #755436;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 5px 15px rgba(34, 21, 14, 0.14);
+    position: relative;
+  }
+
+  .folio-box::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border: 1px solid rgba(169, 123, 40, 0.36);
+    border-radius: 7px;
+    pointer-events: none;
+  }
+
+  /* =========================================================================
+     HERO PROFILE SECTION
+     ========================================================================= */
+  .hero-header-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    border-bottom: 1.5px solid #d5be96;
+    padding-bottom: 10px;
+    margin-bottom: 12px;
+  }
+
+  .hero-title {
+    font-family: 'Cinzel Decorative', 'Cormorant Garamond', serif;
+    font-size: 25px;
+    font-weight: 700;
+    color: var(--crimson-dark);
+    line-height: 1.12;
+  }
+
+  .hero-subtitle {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-top: 2px;
+  }
+
+  .seal-lock-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 5px;
+    background: var(--parchment-aged);
+    border: 1px solid var(--border-brass);
+    color: var(--ink-soft);
+  }
+
+  .seal-lock-tag.locked {
+    background: #f4e4c1;
+    border-color: var(--gold);
+    color: #593b0b;
+    font-weight: 600;
+  }
+
+  .vitals-row {
+    display: grid;
+    grid-template-columns: 1.45fr 1fr 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  @media (max-width: 720px) {
+    .vitals-row { grid-template-columns: repeat(2, 1fr); }
+    .vital-hp-cell { grid-column: span 2; }
+  }
+
+  .vital-plaque {
+    background: linear-gradient(180deg, #fffdf8 0%, #f0e1c4 100%);
+    border: 1.5px solid #755436;
+    border-radius: 8px;
+    padding: 8px 10px;
+    text-align: center;
+  }
+
+  .vital-lbl {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-muted);
+    font-weight: 700;
+  }
+
+  .vital-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.12;
+  }
+
+  .hp-gauge {
+    height: 7px;
+    background: #d5c1a1;
+    border-radius: 99px;
+    overflow: hidden;
+    margin-top: 5px;
+    border: 1px solid #94785a;
+  }
+
+  .hp-gauge-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #8b1e1a, #287549);
+    transition: width 0.25s ease;
+  }
+
+  .abilities-row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  @media (max-width: 640px) {
+    .abilities-row { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .ability-plaque {
+    background: linear-gradient(180deg, #fffdf9 0%, #f3e5cc 100%);
+    border: 1.5px solid #755436;
+    border-radius: 8px;
+    padding: 7px 6px;
+    text-align: center;
+  }
+
+  .ability-abbr {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--crimson-dark);
+    letter-spacing: 0.06em;
+  }
+
+  .ability-mod {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 2px 0;
+  }
+
+  .ability-score-inp {
+    width: 54px;
+    text-align: center;
+    padding: 2px 4px;
+    font-size: 12.5px;
+    border-radius: 99px;
+    margin: 0 auto;
+  }
+
+  /* Runic Spell Slots & Resources */
+  .res-rack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-top: 8px;
+  }
+
+  .rune-cluster {
+    background: linear-gradient(180deg, #fffdf8 0%, #eee0c3 100%);
+    border: 1px solid #755436;
+    border-radius: 6px;
+    padding: 6px 11px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+
+  .rune-cluster-lbl {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink-soft);
+  }
+
+  .rune-gems {
+    display: flex;
+    gap: 7px;
+    align-items: center;
+  }
+
+  .rune-gem {
+    width: 16px;
+    height: 16px;
+    transform: rotate(45deg);
+    border: 2px solid var(--crimson);
+    background: #fffdf8;
+    border-radius: 2px;
+    transition: all 0.2s ease;
+  }
+
+  .rune-gem.spent {
+    background: var(--crimson);
+    box-shadow: inset 0 0 0 2px #f7ebd4;
+  }
+
+  .rune-gem.class-res { border-color: var(--navy); }
+  .rune-gem.class-res.spent { background: var(--navy); }
+
+  /* =========================================================================
+     STRICT TURN ECONOMY BAR (D&D 2024)
+     ========================================================================= */
+  .turn-economy-bar {
+    background: linear-gradient(135deg, #2d1811 0%, #1c0f0a 100%);
+    color: #f8edd8;
+    border: 2px solid var(--gold);
+    border-radius: 10px;
+    padding: 11px 14px;
+    margin-bottom: 12px;
+    box-shadow: 0 6px 18px rgba(34, 21, 14, 0.28);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .economy-pips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .eco-pip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    background: rgba(255, 248, 231, 0.1);
+    border: 1px solid rgba(228, 182, 90, 0.55);
+    color: #fff4db;
+    transition: all 0.2s ease;
+  }
+
+  .eco-pip.spent {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(160, 140, 120, 0.3);
+    color: #9e8b76;
+    text-decoration: line-through;
+  }
+
+  .eco-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #4cd987;
+    box-shadow: 0 0 6px #4cd987;
+  }
+
+  .eco-pip.spent .eco-dot {
+    background: #6b5a4b;
+    box-shadow: none;
+  }
+
+  /* Combo / Follow-up Callout */
+  .arcane-combo-banner {
+    background: linear-gradient(135deg, #fff8e3 0%, #f5dfa9 100%);
+    border: 2px solid var(--gold);
+    border-left: 6px solid var(--crimson);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 12px;
+    box-shadow: 0 5px 16px rgba(169, 123, 40, 0.26);
+  }
+
+  .combo-quick-btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 7px;
+  }
+
+  .combo-jump-btn {
+    background: var(--crimson);
+    color: #fffaf0;
+    border: 1px solid #450b09;
+    border-radius: 4px;
+    padding: 4px 9px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  /* Filter Pills */
+  .filter-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+    align-items: center;
+  }
+
+  .filter-chip {
+    padding: 5px 11px;
+    border-radius: 999px;
+    border: 1px solid #755436;
+    background: var(--parchment-bright);
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    cursor: pointer;
+  }
+
+  .filter-chip.active {
+    background: var(--crimson);
+    color: #fffaf0;
+    border-color: var(--crimson-dark);
+  }
+
+  /* =========================================================================
+     COLLECTIBLE MTG / TALES OF MIDDLE-EARTH STYLE 3D TRADING CARDS
+     ========================================================================= */
+  .grimoire-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 20px;
+    align-items: stretch;
+  }
+
+  .mtg-card-stage {
+    perspective: 1200px;
+    min-height: 430px;
+    display: flex;
+    position: relative;
+  }
+
+  .mtg-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    display: grid;
+  }
+
+  .mtg-card-stage.flipped .mtg-card-inner {
+    transform: rotateY(180deg);
+  }
+
+  .mtg-face {
+    grid-area: 1 / 1;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 15px;
+    padding: 9px;
+    background: linear-gradient(160deg, #1b1512 0%, #0d0a08 55%, #1f1713 100%);
+    border: 2px solid #5c4328;
+    box-shadow:
+      0 12px 26px rgba(18, 12, 9, 0.45),
+      inset 0 0 0 1.5px rgba(228, 182, 90, 0.48);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* CRITICAL POINTER-EVENTS FIX: ensure front is clickable when unflipped, back is clickable when flipped */
+  .mtg-face-front {
+    pointer-events: auto;
+    z-index: 2;
+  }
+  .mtg-card-stage.flipped .mtg-face-front {
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .mtg-face-back {
+    transform: rotateY(180deg);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .mtg-card-stage.flipped .mtg-face-back {
+    pointer-events: auto;
+    z-index: 2;
+  }
+
+  /* Gold aura for cards still legal in active turn */
+  .mtg-card-stage.turn-available-glow .mtg-face {
+    border-color: var(--gold-bright);
+    box-shadow:
+      0 0 0 3px var(--gold-glow),
+      0 14px 32px rgba(135, 28, 25, 0.42);
+  }
+
+  /* Locked state for cards whose turn economy resource is spent */
+  .mtg-card-stage.turn-locked .mtg-face {
+    filter: grayscale(0.88) brightness(0.82);
+    opacity: 0.72;
+  }
+
+  .mtg-card-stage.out-of-charges:not(.turn-locked) .mtg-face {
+    opacity: 0.76;
+    filter: sepia(0.32);
+  }
+
+  /* Inner Gilded Card Frame */
+  .mtg-inner-frame {
+    flex: 1;
+    border-radius: 10px;
+    border: 2px solid var(--gold);
+    background: linear-gradient(180deg, #f8efe0 0%, #ead8b8 100%);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 0 16px rgba(76, 54, 38, 0.25);
+  }
+
+  .mtg-inner-frame.druid { border-color: #3e8e63; }
+  .mtg-inner-frame.paladin { border-color: #d6a23e; }
+  .mtg-inner-frame.bard { border-color: #8e4bb5; }
+  .mtg-inner-frame.beast { border-color: #a86832; }
+
+  /* Top Nameplate Banner */
+  .mtg-nameplate {
+    background: linear-gradient(90deg, #2b1811 0%, #3d2217 50%, #24130d 100%);
+    color: #fcf3e1;
+    padding: 7px 10px;
+    border-bottom: 2px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .mtg-nameplate.druid { background: linear-gradient(90deg, #123326 0%, #1e4d3a 50%, #0f291f 100%); }
+  .mtg-nameplate.paladin { background: linear-gradient(90deg, #47300e 0%, #694715 50%, #38250a 100%); }
+  .mtg-nameplate.bard { background: linear-gradient(90deg, #381847 0%, #522469 50%, #2b1238 100%); }
+  .mtg-nameplate.beast { background: linear-gradient(90deg, #3d2614 0%, #59381e 50%, #2e1c0e 100%); }
+
+  .mtg-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18.5px;
+    font-weight: 700;
+    line-height: 1.08;
+    color: #fff9ed;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.7);
+  }
+
+  .mtg-mana-gem {
+    min-width: 28px;
+    height: 28px;
+    padding: 0 6px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #fffdf8, #e0c594);
+    color: var(--crimson-dark);
+    border: 2px solid var(--gold-bright);
+    font-family: 'Cinzel Decorative', serif;
+    font-weight: 900;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.55);
+  }
+
+  /* Bespoke SVG Artwork Window */
+  .mtg-art-window {
+    height: 118px;
+    margin: 6px 8px 0;
+    border-radius: 6px;
+    border: 2px solid #593d24;
+    box-shadow: inset 0 0 14px rgba(0,0,0,0.65), 0 2px 5px rgba(0,0,0,0.2);
+    overflow: hidden;
+    position: relative;
+    background: #1a120e;
+    flex-shrink: 0;
+  }
+
+  .mtg-art-window svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .mtg-art-caption {
+    position: absolute;
+    bottom: 4px;
+    right: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: rgba(255, 245, 224, 0.85);
+    background: rgba(18, 12, 9, 0.68);
+    padding: 1px 6px;
+    border-radius: 3px;
+    border: 1px solid rgba(228, 182, 90, 0.35);
+  }
+
+  /* Type Line Bar */
+  .mtg-typeline {
+    margin: 6px 8px 0;
+    padding: 4px 8px;
+    border-radius: 5px;
+    background: linear-gradient(90deg, #e5d2b0 0%, #f2e4c9 50%, #dfcaa3 100%);
+    border: 1.5px solid #755436;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .rarity-gem {
+    width: 11px;
+    height: 11px;
+    transform: rotate(45deg);
+    background: radial-gradient(circle at 30% 30%, #ffdf85, #b87a19);
+    border: 1px solid #3d2606;
+    flex-shrink: 0;
+  }
+  .rarity-gem.rare { background: radial-gradient(circle at 30% 30%, #ff998a, #9e1b18); }
+  .rarity-gem.mythic { background: radial-gradient(circle at 30% 30%, #d8a6ff, #5d2187); }
+
+  /* Effect / Lore Text Box */
+  .mtg-textbox {
+    margin: 6px 8px;
+    padding: 8px 9px;
+    border-radius: 6px;
+    background: rgba(255, 252, 244, 0.88);
+    border: 1.5px solid #8a6847;
+    box-shadow: inset 0 1px 4px rgba(34, 21, 14, 0.12);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 12.6px;
+    line-height: 1.38;
+    color: var(--ink);
+  }
+
+  .mtg-badges-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 6px;
+  }
+
+  .tag-pill {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: #e6d5b5;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+  }
+  .tag-pill.bonus { background: #fbe3ae; color: #694000; border: 1px solid #c99c38; }
+  .tag-pill.reaction { background: #dce8f5; color: #163b63; border: 1px solid #6b95c4; }
+  .tag-pill.conc { background: #eadcf5; color: #471c66; border: 1px solid #9668b5; }
+  .tag-pill.combo { background: #871c19; color: #fff8ea; border: 1px solid var(--gold-bright); }
+
+  .pill-adv {
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: var(--emerald-bg);
+    color: var(--emerald);
+    border: 1px solid #78b591;
+  }
+
+  .pill-dis {
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: var(--danger-bg);
+    color: var(--danger);
+    border: 1px solid #c77979;
+  }
+
+  /* Bottom Collector Frame + Action Buttons */
+  .mtg-card-actions {
+    padding: 6px 8px 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    background: rgba(226, 207, 173, 0.85);
+    border-top: 1px solid #bfa57a;
+  }
+
+  .mtg-collector-bar {
+    background: #140e0b;
+    color: #cdb894;
+    font-size: 9.5px;
+    letter-spacing: 0.08em;
+    padding: 3px 8px 1px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-transform: uppercase;
+  }
+
+  /* Lock Banner inside card (never blocks flip button on back) */
+  .turn-lock-strip {
+    background: #291610;
+    color: #f7e6c4;
+    border-top: 1px solid var(--gold);
+    border-bottom: 1px solid var(--gold);
+    padding: 4px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  /* Back Face Ornate Card Design */
+  .mtg-back-inner {
+    flex: 1;
+    border-radius: 10px;
+    border: 2px solid var(--gold-bright);
+    background:
+      radial-gradient(circle at 50% 45%, rgba(228, 182, 90, 0.16) 0%, transparent 65%),
+      linear-gradient(160deg, #271610 0%, #170d09 100%);
+    color: #f7ebd4;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .mtg-back-watermark {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.12;
+    pointer-events: none;
+  }
+
+  .mtg-back-details {
+    margin: 8px;
+    padding: 10px;
+    border-radius: 8px;
+    background: rgba(250, 242, 226, 0.94);
+    color: var(--ink);
+    border: 1.5px solid var(--gold);
+    font-size: 12.5px;
+    line-height: 1.42;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .mtg-back-details strong {
+    color: var(--crimson-dark);
+  }
+
+  /* =========================================================================
+     INVENTORY (ONLY ВІЇ & БЕСТІЇ + USE BUTTON ON EVERY ITEM)
+     ========================================================================= */
+  .wallet-pair {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+    max-width: 440px;
+  }
+
+  .currency-plaque {
+    background: linear-gradient(180deg, #fffdf7 0%, #f2e3c5 100%);
+    border: 2px solid var(--gold);
+    border-radius: 9px;
+    padding: 9px 12px;
+    text-align: center;
+    box-shadow: 0 3px 9px rgba(34, 21, 14, 0.13);
+  }
+
+  .satchel-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(265px, 1fr));
+    gap: 12px;
+    margin-top: 10px;
+  }
+
+  .satchel-card {
+    background: linear-gradient(180deg, #fffdf8 0%, #f2e5cc 100%);
+    border: 1.5px solid #755436;
+    border-radius: 9px;
+    padding: 11px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 8px;
+    box-shadow: 0 3px 10px rgba(34, 21, 14, 0.13);
+    position: relative;
+  }
+
+  .satchel-card::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border: 1px solid rgba(169, 123, 40, 0.36);
+    border-radius: 6px;
+    pointer-events: none;
+  }
+
+  .satchel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .satchel-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18.5px;
+    font-weight: 700;
+    color: var(--crimson-dark);
+    line-height: 1.15;
+  }
+
+  .satchel-qty {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--parchment-aged);
+    border: 1px solid #755436;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  .satchel-note {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+  }
+
+  .satchel-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    padding-top: 7px;
+    border-top: 1px dashed #c2aa82;
+    z-index: 1;
+  }
+
+  /* =========================================================================
+     GM DASHBOARD
+     ========================================================================= */
+  .gm-heroes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(305px, 1fr));
+    gap: 14px;
+  }
+
+  .gm-hero-card {
+    background: var(--parchment-bright);
+    border: 2px solid #755436;
+    border-radius: 9px;
+    padding: 12px;
+    box-shadow: 0 4px 13px rgba(34, 21, 14, 0.15);
+  }
+
+  .chronicle-log {
+    background: #20140e;
+    color: #efe2c8;
+    border: 2px solid #6b4d32;
+    border-radius: 7px;
+    padding: 10px 12px;
+    max-height: 250px;
+    overflow-y: auto;
+    font-size: 12.5px;
+  }
+
+  .chronicle-line {
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .chronicle-line:last-child { border-bottom: none; }
+  .chronicle-ts { color: #b59d79; font-size: 11px; margin-right: 6px; }
+
+  /* Modal Dialog */
+  .modal-veil {
+    position: fixed;
+    inset: 0;
+    background: rgba(18, 10, 7, 0.78);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    z-index: 10000;
+  }
+
+  .modal-parchment {
+    background: var(--parchment-bright);
+    border: 2.5px solid #6b4d32;
+    border-radius: 10px;
+    padding: 18px;
+    max-width: 430px;
+    width: 100%;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65);
+  }
+
+  /* Toast */
+  .toast-scroll {
+    position: fixed;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #22130d;
+    color: #fff6e5;
+    border: 1.5px solid var(--gold-bright);
+    padding: 9px 16px;
+    border-radius: 6px;
+    font-size: 13.5px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.55);
+    z-index: 9999;
+    max-width: 92vw;
+    text-align: center;
+  }
+
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<div class="tome-shell">
+  <div class="corner-ornament co-tl"></div>
+  <div class="corner-ornament co-tr"></div>
+  <div class="corner-ornament co-bl"></div>
+  <div class="corner-ornament co-br"></div>
+
+  <div class="parchment-sheet">
+    <!-- HEADER -->
+    <header class="tome-header">
+      <div class="brand-group">
+        <div class="wax-seal">D20</div>
+        <div>
+          <h1>Присмерк D&amp;D 2024</h1>
+          <div class="brand-sub">Колекційний гримуар та помічник столу</div>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+        <div class="status-pill" id="connPill">
+          <span class="gem-dot" id="connDot"></span>
+          <span id="connText">Фоліант закрито • Оберіть сторінку</span>
+        </div>
+        <button class="btn btn-xs hidden" id="btnCopyInvite" onclick="copyInviteLink()">🔗 Посилання гравцям</button>
+        <button class="btn btn-xs hidden" id="btnLeave" onclick="leaveSession()">Закрити книгу</button>
+      </div>
+    </header>
+
+    <!-- INITIATIVE RIBBON -->
+    <div class="init-ribbon hidden" id="initStrip">
+      <strong style="color:var(--gold-bright); white-space:nowrap;">⚔ Черга бою:</strong>
+      <div id="initList" style="display:flex; gap:6px; align-items:center;"></div>
+    </div>
+
+    <!-- =====================================================================
+         LOBBY: TWO-PAGE OPEN TRAVELER'S TOME
+         ===================================================================== -->
+    <main class="lobby-spread" id="lobbyView">
+      <div class="folio-title-banner">
+        <div style="font-size:11.5px; text-transform:uppercase; letter-spacing:0.18em; color:var(--gold); font-weight:700;">
+          ✦ Хроніки Кампанії Присмерк ✦
+        </div>
+        <h2>Розгорніть Сторінку Пригод</h2>
+        <p>
+          «Оберіть свого героя з архіву Присмерку або запаліть свічу столу як Гейм Майстер...»
+        </p>
+      </div>
+
+      <div class="open-book">
+        <div class="bookmark-ribbon"></div>
+
+        <!-- LEFT PAGE: HERO -->
+        <div class="page-left">
+          <div class="kicker-lbl">Сторінка I • Мандрівник</div>
+          <h3 style="font-size:25px; color:var(--crimson-dark); margin-bottom:4px;">Аркуш Героя</h3>
+          <p class="drop-cap" style="font-size:13px; color:var(--ink-soft); margin:0 0 12px;">
+            Оберіть готового персонажа кампанії або створіть власний аркуш перед входом до кімнати Майстра:
+          </p>
+
+          <div class="preset-grid">
+            <div class="preset-tile active" id="preset-anatoliy" onclick="selectPreset('anatoliy')">
+              <strong>🌿 Анатолій</strong>
+              <span>Тритон • Друїд (Коло моря) 3</span>
+            </div>
+            <div class="preset-tile" id="preset-dzhenik" onclick="selectPreset('dzhenik')">
+              <strong>⚔ Дженік</strong>
+              <span>Аасімар • Паладин (Слава) 3</span>
+            </div>
+            <div class="preset-tile" id="preset-bard" onclick="selectPreset('bard')">
+              <strong>🎶 Бард Чару</strong>
+              <span>Піврослик • Бард (Чари) 3</span>
+            </div>
+          </div>
+
+          <div style="margin-bottom:9px;">
+            <label>Ім'я персонажа</label>
+            <input type="text" id="joinName" value="Анатолій" placeholder="Введіть ім'я героя" />
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:13px;">
+            <div>
+              <label>Клас і підклас</label>
+              <select id="joinClassSelect" onchange="onJoinClassChange()">
+                <option value="druid_sea">Друїд — Коло моря</option>
+                <option value="paladin_glory">Паладин — Клятва слави</option>
+                <option value="bard_glamour">Бард — Колегія чару</option>
+                <option value="custom">Свій клас (порожній)</option>
+              </select>
+            </div>
+            <div>
+              <label>Код кімнати ГМ</label>
+              <input type="text" id="joinRoomCode" placeholder="Напр. A7K9P" style="text-transform:uppercase; font-weight:700;" />
+            </div>
+          </div>
+
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn btn-crimson" style="flex:1;" onclick="joinAsPlayer(false)">📖 Увійти до кімнати</button>
+            <button class="btn" onclick="joinAsPlayer(true)" title="Для гри без інтернету на одному телефоні">🕯 Локально</button>
+          </div>
+        </div>
+
+        <!-- RIGHT PAGE: GAME MASTER -->
+        <div class="page-right">
+          <div>
+            <div class="kicker-lbl">Сторінка II • Оповідач</div>
+            <h3 style="font-size:25px; color:var(--navy); margin-bottom:6px;">Ширма Гейм Майстра</h3>
+            <p class="drop-cap" style="font-size:13px; color:var(--ink-soft); margin:0 0 10px;">
+              Відкрийте стіл Майстра — усі гравці приєднаються до вашого пристрою за кодом або посиланням:
+            </p>
+            <ul style="font-size:13px; color:var(--ink); padding-left:18px; margin:0 0 14px;">
+              <li>Живі показники ХП, КБ та комірок кожного героя</li>
+              <li>Літопис використаних заклинань, умінь і предметів</li>
+              <li>Черга ініціативи бою та відпочинок усього загону</li>
+              <li>Захист аркушів від самовільних змін гравцями</li>
+            </ul>
+          </div>
+
+          <div style="background:rgba(169, 123, 40, 0.13); border:1px dashed #8a6847; border-radius:7px; padding:10px; margin-bottom:12px; font-size:12px; color:var(--ink-soft);">
+            💡 <strong>Для гри на вулиці без мережі:</strong> гравці можуть відкрити свій аркуш кнопкою <em>«🕯 Локально»</em> — усі колекційні 3D-карти, ліміт ходу та рюкзак працюватимуть офлайн.
+          </div>
+
+          <button class="btn btn-gold" style="width:100%; font-size:15px;" onclick="hostAsGM()">👑 Створити стіл Майстра</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- =====================================================================
+         PLAYER VIEW
+         ===================================================================== -->
+    <div id="playerView" class="hidden" style="display:flex; flex-direction:column; flex:1;">
+      <nav class="tabs-bar">
+        <button class="bm-tab active" id="tabBtn-profile" onclick="switchPlayerTab('profile')">📜 Профіль героя</button>
+        <button class="bm-tab" id="tabBtn-spells" onclick="switchPlayerTab('spells')">
+          🃏 Колода заклинань <span class="badge-pill" id="spellsCountBadge">0</span>
+        </button>
+        <button class="bm-tab" id="tabBtn-inventory" onclick="switchPlayerTab('inventory')">🎒 Рюкзак</button>
+        <button class="bm-tab" id="tabBtn-rules" onclick="switchPlayerTab('rules')">📖 Пам'ятка</button>
+      </nav>
+
+      <div class="workspace">
+        <!-- SECTION 1: PROFILE -->
+        <section id="sec-profile">
+          <div class="folio-box" style="margin-bottom:14px;">
+            <div class="hero-header-bar">
+              <div>
+                <div class="hero-title" id="dispHeroName">Анатолій</div>
+                <div class="hero-subtitle" id="dispHeroMeta">Тритон • Друїд (Коло моря) • 3 рівень</div>
+              </div>
+              <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                <span class="seal-lock-tag" id="lockStatusBanner">🔓 Режим заповнення</span>
+                <button class="btn btn-emerald btn-sm" id="btnLockSheet" onclick="lockPlayerSheet()">✔ Затвердити аркуш</button>
+              </div>
+            </div>
+
+            <!-- One-time Setup Form -->
+            <div id="profileEditBlock" style="background:#f3e4c5; border:1px dashed #755436; border-radius:7px; padding:10px; margin-bottom:12px;">
+              <div style="font-size:12px; font-weight:700; color:var(--crimson-dark); margin-bottom:8px;">
+                НАЛАШТУВАННЯ ПРОФІЛЮ (заповніть один раз перед грою та натисніть «Затвердити аркуш»):
+              </div>
+              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:8px;">
+                <div>
+                  <label>Ім'я</label>
+                  <input type="text" id="inpName" onchange="updateField('name', this.value)" />
+                </div>
+                <div>
+                  <label>Вид (Раса)</label>
+                  <input type="text" id="inpRace" onchange="updateField('race', this.value)" />
+                </div>
+                <div>
+                  <label>Клас і підклас</label>
+                  <select id="inpClassKey" onchange="changeCharacterClass(this.value)">
+                    <option value="druid_sea">Друїд (Коло моря)</option>
+                    <option value="paladin_glory">Паладин (Клятва слави)</option>
+                    <option value="bard_glamour">Бард (Колегія чару)</option>
+                    <option value="custom">Свій клас</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Рівень</label>
+                  <input type="number" id="inpLevel" min="1" max="20" onchange="updateField('level', +this.value)" />
+                </div>
+                <div>
+                  <label>Макс. ХП</label>
+                  <input type="number" id="inpMaxHp" min="1" max="300" onchange="updateMaxHp(+this.value)" />
+                </div>
+                <div>
+                  <label>Клас Броні (КБ)</label>
+                  <input type="number" id="inpAc" min="5" max="30" onchange="updateField('ac', +this.value)" />
+                </div>
+                <div>
+                  <label>Швидкість (фт)</label>
+                  <input type="number" id="inpSpeed" min="0" max="120" step="5" onchange="updateField('speed', +this.value)" />
+                </div>
+                <div>
+                  <label>Бонус майстерності</label>
+                  <input type="number" id="inpProf" min="2" max="6" onchange="updateField('prof', +this.value)" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Vitals -->
+            <div class="vitals-row">
+              <div class="vital-plaque vital-hp-cell">
+                <div class="vital-lbl">Здоров'я (Поточні / Макс)</div>
+                <div class="vital-num">
+                  <span id="dispCurHp">19</span> <span style="font-size:17px; color:var(--ink-muted);">/ <span id="dispMaxHp">19</span></span>
+                  <span id="dispTempHp" style="font-size:14px; color:var(--navy);"></span>
+                </div>
+                <div class="hp-gauge"><div class="hp-gauge-fill" id="hpBarFill" style="width:100%;"></div></div>
+              </div>
+              <div class="vital-plaque">
+                <div class="vital-lbl">Клас Броні</div>
+                <div class="vital-num" id="dispAc">12</div>
+              </div>
+              <div class="vital-plaque">
+                <div class="vital-lbl">Ініціатива</div>
+                <div class="vital-num" id="dispInit">+1</div>
+              </div>
+              <div class="vital-plaque">
+                <div class="vital-lbl">СЛ Заклинань</div>
+                <div class="vital-num" id="dispSpellDc">12</div>
+              </div>
+              <div class="vital-plaque">
+                <div class="vital-lbl">Атака магією</div>
+                <div class="vital-num" id="dispSpellAtk">+4</div>
+              </div>
+            </div>
+
+            <!-- 6 Stats -->
+            <div class="abilities-row" id="statsGrid"></div>
+          </div>
+
+          <!-- Slots & Resources Summary -->
+          <div class="folio-box" style="margin-bottom:14px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+              <h3 style="font-size:21px; color:var(--crimson-dark);">Комірки заклинань та класові ресурси</h3>
+              <span style="font-size:12px; color:var(--ink-muted);">Списуються автоматично при касті • Відновлює ГМ</span>
+            </div>
+            <div class="res-rack" id="resourcesDisplay"></div>
+          </div>
+
+          <!-- Attacks & Traits -->
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:14px;">
+            <div class="folio-box">
+              <h3 style="font-size:20px; color:var(--crimson-dark); margin-bottom:8px;">⚔ Зброя, атаки та навички</h3>
+              <textarea id="inpAttacks" rows="5" placeholder="Опишіть зброю, бонус влучання та важливі навички..." onchange="updateField('attacks', this.value)"></textarea>
+            </div>
+            <div class="folio-box">
+              <h3 style="font-size:20px; color:var(--crimson-dark); margin-bottom:8px;">✨ Постійні риси виду та класу</h3>
+              <textarea id="inpTraits" rows="5" placeholder="Темнозір, опори, особливості походження..." onchange="updateField('traits', this.value)"></textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2: COLLECTIBLE MTG-STYLE 3D CARDS -->
+        <section id="sec-spells" class="hidden">
+          <!-- Strict Turn Economy Bar -->
+          <div class="turn-economy-bar">
+            <div class="economy-pips">
+              <span style="font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:var(--gold-bright); font-weight:700;">⏳ Економіка ходу:</span>
+              <span class="eco-pip" id="eco-action"><span class="eco-dot"></span> Дія (1/1)</span>
+              <span class="eco-pip" id="eco-bonus"><span class="eco-dot"></span> Бонусна (1/1)</span>
+              <span class="eco-pip" id="eco-slot"><span class="eco-dot"></span> Комірка за хід (1/1)</span>
+              <span class="eco-pip" id="eco-reaction"><span class="eco-dot"></span> Реакція (1/1)</span>
+            </div>
+            <button class="btn btn-gold btn-sm" id="btnEndTurn" onclick="endPlayerTurn()">⏭ Завершити хід (Новий раунд)</button>
+          </div>
+
+          <!-- Compact Slots Bar -->
+          <div class="folio-box" style="padding:9px 13px; margin-bottom:12px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+              <div id="miniSlotsBar" style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;"></div>
+              <div style="font-size:12px; color:var(--ink-soft);">
+                Натисніть <strong>«↺ Умови»</strong> на карті для плавного 3D-перевороту на зворотний бік
+              </div>
+            </div>
+          </div>
+
+          <!-- Active Turn / Combo Callout -->
+          <div class="arcane-combo-banner hidden" id="comboBanner">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px; flex-wrap:wrap;">
+              <div style="flex:1; min-width:220px;">
+                <strong style="color:var(--crimson-dark); font-size:14.5px;" id="comboTitle">⚡ Хід розпочато:</strong>
+                <div style="font-size:12.5px; color:var(--ink); margin-top:2px;" id="comboDesc"></div>
+              </div>
+              <button class="btn btn-crimson btn-xs" onclick="endPlayerTurn()">⏭ Завершити хід</button>
+            </div>
+            <div class="combo-quick-btns" id="comboChips"></div>
+          </div>
+
+          <!-- Filters -->
+          <div class="filter-strip">
+            <button class="filter-chip active" data-filter="all" onclick="setSpellFilter('all')">Усі карти</button>
+            <button class="filter-chip" data-filter="0" onclick="setSpellFilter('0')">Замовляння (0)</button>
+            <button class="filter-chip" data-filter="1" onclick="setSpellFilter('1')">1-й рівень</button>
+            <button class="filter-chip" data-filter="2" onclick="setSpellFilter('2')">2-й рівень</button>
+            <button class="filter-chip" data-filter="ability" onclick="setSpellFilter('ability')">Уміння / Дикий облік</button>
+            <button class="filter-chip" data-filter="bonus" onclick="setSpellFilter('bonus')">⚡ Бонусна / Реакція</button>
+            <button class="btn btn-xs" style="margin-left:auto;" onclick="toggleCustomSpellForm()">+ Своя картка</button>
+          </div>
+
+          <!-- Custom Card Creator -->
+          <div class="folio-box hidden" id="customSpellForm" style="margin-bottom:14px;">
+            <h4 style="font-size:19px; color:var(--crimson-dark); margin-bottom:8px;">Вписати нову картку до колоди</h4>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:8px; margin-bottom:8px;">
+              <div>
+                <label>Назва</label>
+                <input type="text" id="csName" placeholder="Напр. Вогняна стріла" />
+              </div>
+              <div>
+                <label>Круг / Тип</label>
+                <select id="csLevel">
+                  <option value="0">0 — Замовляння (без комірки)</option>
+                  <option value="1">1-й рівень (1 комірка)</option>
+                  <option value="2">2-й рівень (1 комірка 2-го рівня)</option>
+                  <option value="ability">Класове вміння / Риса</option>
+                </select>
+              </div>
+              <div>
+                <label>Час створення</label>
+                <select id="csAction">
+                  <option value="Дія">Дія</option>
+                  <option value="Бонусна дія">Бонусна дія</option>
+                  <option value="Реакція">Реакція</option>
+                  <option value="Ритуал">Ритуал</option>
+                </select>
+              </div>
+              <div>
+                <label>Дальність / Школа</label>
+                <input type="text" id="csRange" placeholder="60 фт • Втілення" />
+              </div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px;">
+              <div>
+                <label>Лицьовий бік: що робить</label>
+                <textarea id="csFront" rows="2" placeholder="Зрозумілий опис ефекту..."></textarea>
+              </div>
+              <div>
+                <label>Зворотний бік: умови та витрата</label>
+                <textarea id="csBack" rows="2" placeholder="Концентрація, компоненти, умови..."></textarea>
+              </div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
+              <div>
+                <label>Перевага (якщо є)</label>
+                <input type="text" id="csAdv" placeholder="Напр. Перевага на атаку" />
+              </div>
+              <div>
+                <label>Перешкода (якщо є)</label>
+                <input type="text" id="csDis" placeholder="Напр. Перешкода на кидок цілі" />
+              </div>
+            </div>
+            <div style="display:flex; gap:8px;">
+              <button class="btn btn-crimson btn-sm" onclick="addCustomCard()">Додати до колоди</button>
+              <button class="btn btn-sm" onclick="toggleCustomSpellForm()">Скасувати</button>
+            </div>
+          </div>
+
+          <div class="grimoire-grid" id="spellCardsGrid"></div>
+        </section>
+
+        <!-- SECTION 3: INVENTORY (ONLY ВІЇ & БЕСТІЇ + USE BUTTON ON EVERY ITEM) -->
+        <section id="sec-inventory" class="hidden">
+          <div class="folio-box">
+            <h3 style="font-size:23px; color:var(--crimson-dark); margin-bottom:10px;">💰 Гаманець Присмерку</h3>
+            <div class="wallet-pair">
+              <div class="currency-plaque">
+                <label>🪙 Вії</label>
+                <input type="number" id="coin-viya" min="0" onchange="updateCoin('viya', +this.value)" style="text-align:center; font-weight:700; font-size:18px;" />
+              </div>
+              <div class="currency-plaque">
+                <label>🐺 Бестії</label>
+                <input type="number" id="coin-bestia" min="0" onchange="updateCoin('bestia', +this.value)" style="text-align:center; font-weight:700; font-size:18px;" />
+              </div>
+            </div>
+
+            <h3 style="font-size:23px; color:var(--crimson-dark); margin:12px 0 8px;">🎒 Похідний рюкзак та реліквії</h3>
+            <div style="display:grid; grid-template-columns:2fr 1.4fr 0.7fr auto; gap:8px; margin-bottom:8px;">
+              <input type="text" id="invNewName" placeholder="Назва предмета (напр. Зілля лікування)" />
+              <input type="text" id="invNewNote" placeholder="Властивість (2к4+2 НР)" />
+              <input type="number" id="invNewQty" value="1" min="1" />
+              <button class="btn btn-crimson btn-sm" onclick="addInventoryItem()">+ Покласти</button>
+            </div>
+
+            <div style="font-size:12px; color:var(--ink-soft); margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+              <input type="checkbox" id="invNewConsumable" style="width:auto;" />
+              <label for="invNewConsumable" style="margin:0; text-transform:none; font-size:12.5px; cursor:pointer;">
+                Витратний предмет (при натисканні «✨ Використати» зменшується на 1 шт.)
+              </label>
+            </div>
+
+            <div class="satchel-grid" id="invCardsGrid"></div>
+          </div>
+        </section>
+
+        <!-- SECTION 4: QUICK RULES -->
+        <section id="sec-rules" class="hidden">
+          <div class="folio-box">
+            <h3 style="font-size:24px; color:var(--crimson-dark); margin-bottom:10px;">📖 Пам'ятка мандрівника для живої гри</h3>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:12px; font-size:13.5px;">
+              <div style="background:var(--parchment-base); padding:11px; border-radius:7px; border:1px solid #755436;">
+                <strong style="color:var(--crimson);">1. Хід у бою (6 секунд):</strong>
+                <ul style="margin:6px 0 0; padding-left:18px;">
+                  <li><strong>Переміщення:</strong> до своєї швидкості (зазвичай 30 фт).</li>
+                  <li><strong>1 Дія:</strong> Атака зброєю, заклинання за Дію, Ривок, Відхід, Допомога або Сховатися.</li>
+                  <li><strong>1 Бонусна дія:</strong> лише 1 раз за хід (напр. <em>Бардівське натхнення</em>, <em>Цілюще слово</em>, <em>Дикий облік</em>).</li>
+                  <li><strong>1 Реакція (на чужому ході):</strong> удар по ворогу, що тікає, або заклинання-реакція (напр. <em>Поглинання стихій</em>).</li>
+                </ul>
+              </div>
+              <div style="background:var(--parchment-base); padding:11px; border-radius:7px; border:1px solid #755436;">
+                <strong style="color:var(--crimson);">2. Правило комірок (D&amp;D 2024):</strong>
+                <ul style="margin:6px 0 0; padding-left:18px;">
+                  <li>За свій хід можна витратити <strong>не більше 1 комірки заклинань</strong>.</li>
+                  <li>Замовляння (0 круг) або безкоштовне видове вміння <strong>можна</strong> поєднувати із заклинанням за комірку, якщо вистачає дій.</li>
+                  <li>Одне заклинання з <strong>Концентрацією</strong> збиває попередню концентрацію.</li>
+                </ul>
+              </div>
+              <div style="background:var(--parchment-base); padding:11px; border-radius:7px; border:1px solid #755436;">
+                <strong style="color:var(--crimson);">3. Перевага та Перешкода:</strong>
+                <ul style="margin:6px 0 0; padding-left:18px;">
+                  <li><strong>Перевага:</strong> кидаєш два d20 і береш <strong>більший</strong> результат.</li>
+                  <li><strong>Перешкода:</strong> кидаєш два d20 і береш <strong>менший</strong> результат.</li>
+                  <li>Якщо є і перевага, і перешкода одночасно — вони взаємно скасовуються (кидаєш один d20).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- =====================================================================
+         GM VIEW
+         ===================================================================== -->
+    <div id="gmView" class="hidden workspace">
+      <div class="folio-box" style="margin-bottom:14px;">
+        <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px;">
+          <div>
+            <h2 style="font-size:25px; color:var(--crimson-dark);">👑 Стіл Гейм Майстра</h2>
+            <div style="font-size:13px; color:var(--ink-soft);">
+              Код кімнати: <strong id="gmRoomCodeDisp" style="font-size:16px; color:var(--crimson); letter-spacing:1px;">—</strong>
+              • Підключено гравців: <strong id="gmPlayerCount">0</strong>
+            </div>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:7px;">
+            <button class="btn btn-sm" onclick="gmPartyRest('short')">⛺ Короткий відпочинок (усім)</button>
+            <button class="btn btn-emerald btn-sm" onclick="gmPartyRest('long')">🌙 Тривалий відпочинок (усім)</button>
+          </div>
+        </div>
+
+        <!-- Initiative Manager -->
+        <div style="margin-top:12px; padding-top:10px; border-top:1px solid #d5be96;">
+          <div style="display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
+            <strong style="font-size:13px; color:var(--ink-soft);">⚔ Ініціатива бою:</strong>
+            <input type="text" id="gmInitName" placeholder="Ім'я (Гоблін / Анатолій)" style="width:170px; padding:5px 8px;" />
+            <input type="number" id="gmInitVal" placeholder="Кидок" style="width:80px; padding:5px 8px;" />
+            <button class="btn btn-xs" onclick="gmAddInit()">+ Додати</button>
+            <button class="btn btn-gold btn-xs" onclick="gmNextTurn()">Наступний хід ➔</button>
+            <button class="btn btn-xs" onclick="gmClearInit()">Очистити</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Connected Players Cards -->
+      <div id="gmEmptyHint" class="folio-box" style="text-align:center; padding:24px; margin-bottom:14px; color:var(--ink-soft);">
+        Поки що ніхто не приєднався. Натисніть <strong>«🔗 Посилання гравцям»</strong> у верхній панелі або продиктуйте код кімнати.
+      </div>
+      <div class="gm-heroes-grid" id="gmPlayersGrid" style="margin-bottom:14px;"></div>
+
+      <!-- Event Log & GM Screen Notes -->
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(290px, 1fr)); gap:14px;">
+        <div class="folio-box">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <h3 style="font-size:20px; color:var(--crimson-dark);">📜 Літопис подій та витрат</h3>
+            <button class="btn btn-xs" onclick="clearLog()">Очистити</button>
+          </div>
+          <div class="chronicle-log" id="gmLogBox"></div>
+        </div>
+
+        <div class="folio-box">
+          <h3 style="font-size:20px; color:var(--crimson-dark); margin-bottom:6px;">🛡 Ширма ГМ (таємні нотатки)</h3>
+          <div style="font-size:11.5px; color:var(--ink-muted); margin-bottom:6px;">
+            Орієнтири: Легко КС 10 • Середньо КС 13 • Важко КС 16 • Лут: 2 короткі мечі, зілля лікування (2к4+2), кристал Порядку (+1к4 до ряткидка).
+          </div>
+          <textarea id="gmSecretNotes" rows="7" placeholder="Записуйте сюди ХП ворогів, КС перевірок та сюжетні нотатки..." onchange="saveGmNotes()"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Ritual / Slot Choice Modal -->
+<div class="modal-veil hidden" id="choiceModal">
+  <div class="modal-parchment">
+    <h3 style="font-size:23px; color:var(--crimson-dark); margin-bottom:6px;" id="modalTitle">Спосіб творення</h3>
+    <p style="font-size:13.5px; color:var(--ink); margin:0 0 14px;" id="modalBody"></p>
+    <div style="display:flex; gap:8px; justify-content:flex-end; flex-wrap:wrap;">
+      <button class="btn btn-sm" id="modalSecondaryBtn">Ритуал (0 комірок)</button>
+      <button class="btn btn-crimson btn-sm" id="modalPrimaryBtn">Витратити комірку</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-scroll hidden" id="toastBox"></div>
+
+<script>
+// ============================================================================
+// BESPOKE INLINE SVG ARTWORK GENERATOR FOR MTG-STYLE COLLECTOR CARDS
+// ============================================================================
+
+function getCardArtSVG(artKey) {
+  const arts = {
+    sea: `
+      <svg viewBox="0 0 320 130" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="gSea" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#072227"/><stop offset="55%" stop-color="#114b5f"/><stop offset="100%" stop-color="#2c8c99"/>
+          </linearGradient>
+          <radialGradient id="gMoonSea" cx="50%" cy="28%" r="40%">
+            <stop offset="0%" stop-color="#e8fffb" stop-opacity="0.9"/><stop offset="100%" stop-color="#2c8c99" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <rect width="320" height="130" fill="url(#gSea)"/>
+        <circle cx="160" cy="36" r="44" fill="url(#gMoonSea)"/>
+        <circle cx="160" cy="36" r="14" fill="#e6fff9" opacity="0.85"/>
+        <path d="M0 84 Q45 64 90 84 T180 84 T270 84 T320 84 L320 130 L0 130 Z" fill="#0c3b47" opacity="0.85"/>
+        <path d="M0 98 Q55 78 110 98 T220 98 T320 98 L320 130 L0 130 Z" fill="#062026"/>
+        <path d="M160 22 L160 108 M146 34 Q160 46 174 34 M146 34 L146 22 M174 34 L174 22" stroke="#9ef5e8" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      </svg>`,
+    frost: `
+      <svg viewBox="0 0 320 130" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="gFrost" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0a192f"/><stop offset="60%" stop-color="#1d4e89"/><stop offset="100%" stop-color="#7bdff2"/>
+          </linearGradient>
+        </defs>
+        <rect width="320" height="130" fill="url(#gFrost)"/>
+        <polygon points="160,12 178,65 160,118 142,65" fill="#caf0f8" opacity="0.85"/>
+        <polygon points="160,12 178,65 160,65" fill="#ffffff"/>
+        <polygon points="118,38 130,72 118,104 106,72" fill="#90e0ef" opacity="0.65"/>
+        <polygon points="202,38 214,72 202,104 190,72" fill="#90e0ef" opacity="0.65"/>
+        <circle cx="160" cy="65" r="46" stroke="#caf0f8" stroke-width="1" stroke-dasharray="4 4" fill="none" opacity="0.7"/>
+      </svg>`,
+    nature: `
+      <svg viewBox="0 0 320 130" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="gNat" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#0d2618"/><stop offset="55%" stop-color="#1e5631"/><stop offset="100%" stop-color="#68b058"/>
+          </linearGradient>
+        </defs>
+        <rect width="320" height="130" fill="url(#gNat)"/>
+        <circle cx="160" cy="65" r="44" fill="#a4de02" opacity="0.16"/>
+        <path d="M160 115 C155 82, 130 66, 108 42 C136 44, 152 58, 160 76 C168 58, 184 44, 212 42 C190 66, 165 82, 160 115 Z" fill="#8fd66d"/>
+        <path d="M160 118 L160 24" stroke="#e4f7c8" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="160" cy="24" r="5" fill="#fff5b8"/>
+      </svg>`,
+    thunder: `
+      <svg viewBox="0 0 320 130" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="gThun" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#151329"/><stop offset="55%" stop-color="#2b2d5c"/><stop offset="100%" stop-color="#5e72eb"/>
+          </linearGradient>
+        </defs>
+        <rect width="320" height="130" fill="url(#gThun)"/>
+        <circle cx="160" cy="65" r="48" stroke="#a3b8ff" stroke-width="2" fill="none" opacity="0.5"/>
+        <circle cx="160" cy="65" r="32" stroke="#dce4ff" stroke-width="1.5" fill="none" opacity="0.75"/>
+        <polygon points="168,14 140,66 162,66 148,116 186,58 162,58" fill="#fff3b0" stroke="#70d6ff" stroke-width="1.5"/>
+      </svg>`,
+    beast: `
+      <svg viewBox="0 0 320 130" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="gBeast" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#24150c"/><stop offset="55%" stop-color="#543318"/><stop offset="100%" stop-color="#9e622b"/>
+          </linearGradient>
+        </defs>
+        <rect width="320" height="130" fill="url(#gBeast)"/>
+        <circle cx="160" cy="65" r="45" fill="#f2b866" opacity="0.14"/>
+        <path d="M115 95 L132 34 L152 58 L168 58 L188 34 L205 95 L160 112 Z" fill="#d99648" stroke="#3b200c" stroke-width="2"/>
+        <polygon points="142,68 152,74 142,78" fill="#fff3b0"/>
+        <polygon points="178,68 168,74 178,78" fill="#fff3b0"/>
+      </svg>`,
+    holy: `
+      <svg viewBox="0 0 320 130" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="gHoly" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#3b2509"/><stop offset="55%" stop-color="#875a16"/><stop offset="100%" stop-color="#e6b84c"/>
+          </linearGradient>
+          <radialGradient id="gSun" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ffffff"/><stop offset="45%" stop-color="#ffe699" stop-opacity="0.8"/><stop offset="100%" stop-color="#e6b84c" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <rect width="320" height="130" fill="url(#gHoly)"/>
+        <circle cx="160" cy="65" r="56" fill="url(#gSun)"/>
+        <path d="M160 12 L160 118 M112 65 L208 65 M128 33 L192 97 M192 33 L128 97" stroke="#fff8db" stroke-width="2.2" opacity="0.85"/>
+        <polygon points="160,24 167,62 200,65 167,68 160,106 153,68 120,65 153,62" fill="#ffffff"/>
+      </svg>`,
+    smite: `
+      <svg viewBox="0 0 320 130" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="gSmite" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#3d110e"/><stop offset="50%" stop-color="#8f291c"/><stop offset="100%" stop-color="#f2b84b"/>
+          </linearGradient>
+        </defs>
+        <rect width="320" height="130" fill="url(#gSmite)"/>
+        <circle cx="160" cy="65" r="44" fill="#ffe89e" opacity="0.28"/>
+        <polygon points="160,10 166,82 154,82" fill="#fffdf5"/>
+        <rect x="140" y="82" width="40" height="6" rx="2" fill="#ffd166"/>
+        <rect x="157" y="88" width="6" height="22" fill="#d49a35"/>
+        <circle cx="160" cy="113" r="5" fill="#ffd166"/>
+      </svg>`,
+    music: `
+      <svg viewBox="0 0 320 130" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="gMusic" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#240e36"/><stop offset="55%" stop-color="#57237a"/><stop offset="100%" stop-color="#c76bbd"/>
+          </linearGradient>
+        </defs>
+        <rect width="320" height="130" fill="url(#gMusic)"/>
+        <path d="M10 75 Q85 25 160 75 T310 75" stroke="#f7b2e6" stroke-width="2" fill="none" opacity="0.7"/>
+        <path d="M10 55 Q85 105 160 55 T310 55" stroke="#ffd6f5" stroke-width="1.5" fill="none" opacity="0.5"/>
+        <ellipse cx="160" cy="76" rx="22" ry="26" fill="#e09f5a" stroke="#fff3d6" stroke-width="1.5"/>
+        <circle cx="160" cy="76" r="7" fill="#2b133d"/>
+        <rect x="157" y="18" width="6" height="34" fill="#e09f5a"/>
+      </svg>`,
+    illusion: `
+      <svg viewBox="0 0 320 130" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="gIll" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#131836"/><stop offset="55%" stop-color="#313d7a"/><stop offset="100%" stop-color="#7c8ce0"/>
+          </linearGradient>
+        </defs>
+        <rect width="320" height="130" fill="url(#gIll)"/>
+        <circle cx="135" cy="65" r="34" stroke="#b8c4ff" stroke-width="2" fill="rgba(184,196,255,0.12)"/>
+        <circle cx="160" cy="65" r="34" stroke="#e2e7ff" stroke-width="2" fill="rgba(226,231,255,0.16)"/>
+        <circle cx="185" cy="65" r="34" stroke="#b8c4ff" stroke-width="2" fill="rgba(184,196,255,0.12)"/>
+        <polygon points="160,46 172,65 160,84 148,65" fill="#ffffff" opacity="0.9"/>
+      </svg>`,
+    heal: `
+      <svg viewBox="0 0 320 130" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="gHeal" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#103326"/><stop offset="55%" stop-color="#246b4e"/><stop offset="100%" stop-color="#76d7a8"/>
+          </linearGradient>
+        </defs>
+        <rect width="320" height="130" fill="url(#gHeal)"/>
+        <circle cx="160" cy="65" r="42" fill="#b7f7d4" opacity="0.22"/>
+        <path d="M160 98 C160 98 118 72 118 47 C118 33 130 25 142 25 C151 25 157 30 160 36 C163 30 169 25 178 25 C190 25 202 33 202 47 C202 72 160 98 160 98 Z" fill="#e6fff2" stroke="#ffe599" stroke-width="2"/>
+      </svg>`
+  };
+  return arts[artKey] || arts.holy;
+}
+
+// ============================================================================
+// DATABASE: CHARACTER PRESETS & COLLECTIBLE SPELL/ABILITY CARDS (D&D 2024)
+// ============================================================================
+
+const PRESETS = {
+  anatoliy: {
+    name: "Анатолій",
+    race: "Тритон",
+    classKey: "druid_sea",
+    className: "Друїд (Коло моря)",
+    level: 3,
+    maxHp: 19,
+    curHp: 19,
+    tempHp: 0,
+    ac: 12,
+    speed: 30,
+    prof: 2,
+    castStat: "wis",
+    stats: { str: 11, dex: 12, con: 12, int: 12, wis: 15, cha: 11 },
+    slots: { 1: { max: 4, used: 0 }, 2: { max: 2, used: 0 } },
+    resources: [
+      { id: "wild_shape", name: "Дикий облік / Гнів моря", max: 2, used: 0, rest: "short" },
+      { id: "free_fog", name: "Тритон: Хмара туману (без комірки)", max: 1, used: 0, rest: "long" },
+      { id: "free_gust", name: "Тритон: Порив вітру (без комірки)", max: 1, used: 0, rest: "long" },
+      { id: "lucky_pts", name: "Щасливчик (очки удачі)", max: 2, used: 0, rest: "long" }
+    ],
+    attacks: "Посох під «Шилейлою»: +4 влучання, 1к8+2 дробильної або силової.\nЗвичайний посох: +2, 1к6 (двома руками 1к8).\nСерп: +2, 1к4 рубаної.\nНавички: Сприйняття +4, Виживання +4, Догляд за тваринами +4, Проникливість +2, Медицина +2, Переконання +2.",
+    traits: "Тритон: дихає повітрям і водою, темнозір 60 фт, опір шкоді холодом. Розуміння простих ідей від морських істот.\nВартовий: володіння бойовою зброєю та середніми обладунками.\nДруїдська мова.",
+    coins: { viya: 15, bestia: 0 },
+    inventory: [
+      { name: "Посох-фокус (вигляд тризуба)", note: "Фокус друїда; ціль для Шилейли", qty: 1, consumable: false },
+      { name: "Серп", note: "1к4 рубаної", qty: 1, consumable: false },
+      { name: "Шкіряний обладунок", note: "КБ 11 + СПР (12)", qty: 1, consumable: false },
+      { name: "Набір травника та навігатора", note: "Інструменти", qty: 1, consumable: false },
+      { name: "Вирізане з фрески око чорного ворона", note: "Властивості невідомі", qty: 1, consumable: false },
+      { name: "Пайки на 10 днів та спорядження мандрівника", note: "Спальник, мотузка, 10 смолоскипів", qty: 1, consumable: true }
+    ]
+  },
+
+  dzhenik: {
+    name: "Дженік",
+    race: "Аасімар",
+    classKey: "paladin_glory",
+    className: "Паладин (Клятва слави)",
+    level: 3,
+    maxHp: 24,
+    curHp: 24,
+    tempHp: 0,
+    ac: 14,
+    speed: 30,
+    prof: 2,
+    castStat: "cha",
+    stats: { str: 14, dex: 11, con: 11, int: 11, wis: 11, cha: 18 },
+    slots: { 1: { max: 3, used: 0 }, 2: { max: 0, used: 0 } },
+    resources: [
+      { id: "channel_div", name: "Проведення божественності", max: 2, used: 0, rest: "short" },
+      { id: "lay_hands", name: "Покладання рук (запас НР по 5)", max: 3, used: 0, rest: "long" },
+      { id: "free_smite", name: "Безкоштовна Божественна кара", max: 1, used: 0, rest: "long" },
+      { id: "free_hword", name: "Маг. адепт: Цілюще слово", max: 1, used: 0, rest: "long" },
+      { id: "healing_hands", name: "Аасімар: Цілющі руки (2к4)", max: 1, used: 0, rest: "long" },
+      { id: "celestial_rev", name: "Небесне одкровення", max: 1, used: 0, rest: "long" }
+    ],
+    attacks: "Довгий меч (Дуель, 1 рука): +4 влучання, 1к8+4 рубаної (властивість Sap: перешкода наступній атаці цілі).\nДовгий меч (2 руки): +4, 1к10+2.\nРяткидки: МУД +2, ХАР +6.\nНавички: Релігія +2, Проникливість +2, Переконання +4, Залякування +4.",
+    traits: "Аасімар: темнозір 60 фт, опір променистій та некротичній шкоді.\nСтиль бою «Дуель»: +2 до шкоди одноручною зброєю.\nКлятва слави: Надихаюча кара та Незрівнянний атлет.",
+    coins: { viya: 0, bestia: 0 },
+    inventory: [
+      { name: "Довгий меч", note: "1к8+4 (Дуель)", qty: 1, consumable: false },
+      { name: "Кіраса", note: "КБ 14 + СПР (макс +2)", qty: 1, consumable: false },
+      { name: "Знайдений щит із символом місяця", note: "Властивості ще не визначені", qty: 1, consumable: false },
+      { name: "Символ учення колосся пшениці", note: "Священний фокус", qty: 1, consumable: false },
+      { name: "Каліграфічне приладдя та 10 аркушів пергаменту", note: "Від передісторії", qty: 1, consumable: true }
+    ]
+  },
+
+  bard: {
+    name: "Бард Чару",
+    race: "Піврослик",
+    classKey: "bard_glamour",
+    className: "Бард (Колегія чару)",
+    level: 3,
+    maxHp: 17,
+    curHp: 17,
+    tempHp: 0,
+    ac: 12,
+    speed: 30,
+    prof: 2,
+    castStat: "cha",
+    stats: { str: 11, dex: 13, con: 14, int: 7, wis: 12, cha: 19 },
+    slots: { 1: { max: 4, used: 0 }, 2: { max: 2, used: 0 } },
+    resources: [
+      { id: "bard_insp", name: "Бардівське натхнення (к6)", max: 4, used: 0, rest: "long" },
+      { id: "beguiling", name: "Чарівна магія (Колегія чару)", max: 1, used: 0, rest: "long" }
+    ],
+    attacks: "Кинджал: +3 влучання, 1к4+1 колючої (метання 20/60 фт).\nЕкспертиза: Обман +8, Переконання +8.\nМайстер на всі руки: +1 до всіх неволодіючих навичок.\nРяткидки: СПР +3, ХАР +6.",
+    traits: "Удача піврослика: випала 1 на к20 — перекинь і візьми новий результат.\nХоробрість: перевага на ряткидки проти стану «наляканий».\nСпритність піврослика та Природна скритність.",
+    coins: { viya: 1, bestia: 5 },
+    inventory: [
+      { name: "Лютня (фокус барда)", note: "СЛ 10 відома мелодія / СЛ 15 імпровізація", qty: 1, consumable: false },
+      { name: "Кинджал", note: "1к4+1 колючої", qty: 2, consumable: false },
+      { name: "Шкіряний обладунок", note: "КБ 11 + СПР (12)", qty: 1, consumable: false },
+      { name: "Набір для підробки документів", note: "Почерк СЛ 15, печатка СЛ 20", qty: 1, consumable: false },
+      { name: "Набір артиста та 4 костюми", note: "Ліхтар, дзеркало, 8 фляг олії, пайки 9 дн.", qty: 1, consumable: false }
+    ]
+  },
+
+  custom: {
+    name: "Новий Герой",
+    race: "Людина",
+    classKey: "custom",
+    className: "Власний клас",
+    level: 3,
+    maxHp: 20,
+    curHp: 20,
+    tempHp: 0,
+    ac: 13,
+    speed: 30,
+    prof: 2,
+    castStat: "cha",
+    stats: { str: 12, dex: 14, con: 14, int: 10, wis: 12, cha: 14 },
+    slots: { 1: { max: 3, used: 0 }, 2: { max: 0, used: 0 } },
+    resources: [],
+    attacks: "Зброя: +4 влучання, 1к8+2 шкоди.",
+    traits: "Опишіть особливості вашого героя.",
+    coins: { viya: 0, bestia: 0 },
+    inventory: [
+      { name: "Зілля лікування", note: "Відновлює 2к4+2 НР", qty: 1, consumable: true }
+    ]
+  }
+};
+
+// CARD DECKS BY CLASS (WITH BESPOKE ART KEYS & RARITIES)
+const CLASS_CARDS = {
+  druid_sea: [
+    {
+      id: "dr_guidance", name: "Настанова", en: "Guidance", level: 0, kind: "spell", school: "Віщування",
+      action: "Дія", range: "Дотик", theme: "druid", art: "nature", rarity: "common", costType: "free", costLabel: "Без комірки",
+      front: "Торкнися згодної істоти й обери одну навичку. До кінця дії вона додає +1к4 до кожної перевірки з цією навичкою (до кидка).",
+      back: "Концентрація до 1 хв. Компоненти: В, С. Не додається до атак, ряткидків чи ініціативи. Збиває попередню концентрацію.",
+      adv: "", dis: ""
+    },
+    {
+      id: "dr_shillelagh", name: "Шилейла", en: "Shillelagh", level: 0, kind: "spell", school: "Перетворення",
+      action: "Бонусна дія", range: "На себе", theme: "druid", art: "nature", rarity: "common", costType: "free", costLabel: "Без комірки",
+      front: "Зачаруй свій посох на 1 хвилину: атака ближнього бою ним стає +4, а шкода — 1к8+2 дробильною або силовою на вибір.",
+      back: "Без концентрації. Компоненти: В, С, М (омела). Саме накладання не завдає удару — бий окремою дією «Атака».",
+      adv: "", dis: "",
+      trigger: { title: "Шилейла активна!", desc: "Тепер у цей же хід можна зробити основну Дію «Атака» посохом (+4, шкода 1к8+2) або замовляння за Дію.", targets: ["dr_ray", "dr_guidance"] }
+    },
+    {
+      id: "dr_ray", name: "Промінь холоду", en: "Ray of Frost", level: 0, kind: "spell", school: "Втілення",
+      action: "Дія", range: "60 фт", theme: "druid", art: "frost", rarity: "common", costType: "free", costLabel: "Без комірки",
+      front: "Дальня атака заклинанням (+4 проти КБ). Влучання: 1к8 холодом і швидкість цілі зменшується на 10 фт до твого наступного ходу.",
+      back: "Миттєво, без концентрації. Компоненти: В, С. Ряткидок не потрібен.",
+      adv: "", dis: ""
+    },
+    {
+      id: "dr_hword", name: "Цілюще слово", en: "Healing Word", level: 1, kind: "spell", school: "Огородження",
+      action: "Бонусна дія", range: "60 фт", theme: "druid", art: "heal", rarity: "rare", costType: "slot", slotLevel: 1, costLabel: "1 комірка (1 або 2 рівня)",
+      front: "Істота, яку бачиш у 60 фт (можна себе), миттєво відновлює 2к4+2 НР. Підіймає союзника з 0 НР.",
+      back: "Без концентрації. Компонент: В. Комірка 2-го рівня: 4к4+2 НР. Після бонусної дії можна використати замовляння за Дію.",
+      adv: "", dis: "",
+      trigger: { title: "Бонусне заклинання використано", desc: "Основна Дія ще вільна! Можна застосувати замовляння без витрати комірки.", targets: ["dr_ray", "dr_guidance"] }
+    },
+    {
+      id: "dr_absorb", name: "Поглинання стихій", en: "Absorb Elements", level: 1, kind: "spell", school: "Огородження",
+      action: "Реакція", range: "На себе", theme: "druid", art: "thunder", rarity: "rare", costType: "slot", slotLevel: 1, costLabel: "1 комірка (1 або 2 рівня)",
+      front: "Реакція на отримання шкоди кислотою, холодом, вогнем, блискавкою чи громом: отримуєш опір цьому типу шкоди (половина шкоди), а наступний удар ближнього бою додасть +1к6 цієї стихії.",
+      back: "Тривалість 1 раунд, без концентрації. Компонент: С. Комірка 2-го рівня: +2к6 шкоди. Два джерела опору холоду не сумуються.",
+      adv: "", dis: ""
+    },
+    {
+      id: "dr_beastbond", name: "Звірячий зв'язок", en: "Beast Bond", level: 1, kind: "spell", school: "Віщування",
+      action: "Дія", range: "Дотик", theme: "druid", art: "beast", rarity: "common", costType: "slot", slotLevel: 1, costLabel: "1 комірка",
+      front: "Телепатичний зв'язок із дружнім звіром (ІНТ < 4). Звір отримує ПЕРЕВАГУ на атаки проти ворогів у 5 фт від тебе.",
+      back: "Концентрація до 10 хв. Компоненти: В, С, М. Комірка 2-го рівня не посилює ефект.",
+      adv: "Перевага на атаки звіра поруч із тобою", dis: ""
+    },
+    {
+      id: "dr_iceknife", name: "Крижаний кинджал", en: "Ice Knife", level: 1, kind: "spell", school: "Виклик",
+      action: "Дія", range: "60 фт", theme: "druid", art: "frost", rarity: "rare", costType: "slot", slotLevel: 1, costLabel: "1 комірка (1 або 2 рівня)",
+      front: "1) Атака заклинанням (+4): при влучанні 1к10 колючої. 2) Навіть при промаху вибухає: ціль і всі в 5 фт роблять ряткидок СПР (СЛ 12) або отримують 2к6 холодом.",
+      back: "Миттєво, без концентрації. Компоненти: С, М (крапля води). Комірка 2-го рівня: вибух 3к6. Союзники поруч теж під загрозою!",
+      adv: "", dis: ""
+    },
+    {
+      id: "dr_fog", name: "Хмара туману", en: "Fog Cloud", level: 1, kind: "spell", school: "Виклик",
+      action: "Дія", range: "120 фт", theme: "druid", art: "sea", rarity: "common", costType: "free_or_slot", freeRes: "free_fog", slotLevel: 1, costLabel: "1/день безкоштовно або комірка",
+      front: "Сфера густого туману радіусом 20 фт. Зона сильно заслонена — звичайним зором крізь неї нічого не видно (ні ворогам, ні союзникам).",
+      back: "Концентрація до 1 год. Компоненти: В, С. Спершу витрачає видове вміння Тритона (1/відпочинок), далі — комірку (2-й рівень = радіус 40 фт).",
+      adv: "", dis: "Сильне заслонення (сліпота всередині)"
+    },
+    {
+      id: "dr_thunder", name: "Громова хвиля", en: "Thunderwave", level: 1, kind: "spell", school: "Втілення",
+      action: "Дія", range: "Куб 15 фт", theme: "druid", art: "thunder", rarity: "rare", costType: "slot", slotLevel: 1, costLabel: "1 комірка (1 або 2 рівня)",
+      front: "Ударна хвиля в кубі 15 фт від тебе. Ряток СТА (СЛ 12): провал — 2к8 громової та відштовхування на 10 фт; успіх — половина шкоди без поштовху.",
+      back: "Миттєво, без концентрації. Компоненти: В, С. Комірка 2-го рівня: 3к8. Гуркіт чути за 300 фт!",
+      adv: "", dis: ""
+    },
+    {
+      id: "dr_animals", name: "Розмова з тваринами", en: "Speak with Animals", level: 1, kind: "spell", school: "Віщування",
+      action: "Ритуал / Дія", range: "На себе", theme: "druid", art: "nature", rarity: "common", costType: "ritual_or_slot", slotLevel: 1, costLabel: "Ритуал (0) або комірка (Дія)",
+      front: "10 хвилин розумієш звірів і можеш спілкуватися з ними, розпитуючи про околиці та події минулої доби.",
+      back: "Без концентрації, 10 хв. Ритуал (+10 хв творення) не витрачає комірку; миттєве застосування за Дію коштує 1 комірку.",
+      adv: "", dis: ""
+    },
+    {
+      id: "dr_moonbeam", name: "Місячний промінь", en: "Moonbeam", level: 2, kind: "spell", school: "Втілення",
+      action: "Дія", range: "120 фт", theme: "druid", art: "holy", rarity: "mythic", costType: "slot", slotLevel: 2, costLabel: "1 комірка 2-го рівня",
+      front: "Стовп сріблястого світла (радіус 5 фт). При появі, вході або завершенні ходу там: ряток СТА (СЛ 12) — 2к10 променистої (успіх — половина). Перевертні повертають справжній вигляд.",
+      back: "Концентрація до 1 хв. Компоненти: В, С, М. На наступних ходах можна пересунути промінь на 60 фт дією Магія.",
+      adv: "", dis: ""
+    },
+    {
+      id: "dr_lesser", name: "Мале відновлення", en: "Lesser Restoration", level: 2, kind: "spell", school: "Огородження",
+      action: "Бонусна дія", range: "Дотик", theme: "druid", art: "heal", rarity: "rare", costType: "slot", slotLevel: 2, costLabel: "1 комірка 2-го рівня",
+      front: "Торкнися істоти й миттєво зніми з неї один стан: Осліплений, Оглухлий, Паралізований або Отруєний.",
+      back: "Бонусна дія (D&D 2024), без концентрації. Компоненти: В, С. Не відновлює НР.",
+      adv: "", dis: ""
+    },
+    {
+      id: "dr_gust", name: "Порив вітру", en: "Gust of Wind", level: 2, kind: "spell", school: "Втілення",
+      action: "Дія", range: "Лінія 60×10 фт", theme: "druid", art: "sea", rarity: "rare", costType: "free_or_slot", freeRes: "free_gust", slotLevel: 2, costLabel: "1/день безкоштовно або комірка 2-го",
+      front: "Потужний шквал вітру: істоти в лінії роблять ряток СИЛ (СЛ 12) або відлітають на 15 фт. Рух назустріч вітру коштує вдвічі дорожче. Розсіює туман і газ.",
+      back: "Концентрація до 1 хв. Компоненти: В, С, М. На наступних ходах бонусною дією можна змінювати напрямок вітру.",
+      adv: "", dis: ""
+    },
+    {
+      id: "dr_shatter", name: "Дребезки", en: "Shatter", level: 2, kind: "spell", school: "Втілення",
+      action: "Дія", range: "60 фт", theme: "druid", art: "thunder", rarity: "mythic", costType: "slot", slotLevel: 2, costLabel: "1 комірка 2-го рівня",
+      front: "Оглушливий дзвін у сфері радіусом 10 фт. Ряток СТА (СЛ 12): провал — 3к8 громової шкоди; успіх — половина. Руйнує незакріплені предмети.",
+      back: "Миттєво, без концентрації. Компоненти: В, С, М. Конструкти (големи, статуї) мають ПЕРЕШКОДУ на ряткидок!",
+      adv: "", dis: "Перешкода на ряткидок у конструктів"
+    },
+    {
+      id: "dr_wrath", name: "Гнів моря", en: "Wrath of the Sea", level: "Уміння", kind: "ability", school: "Коло моря",
+      action: "Бонусна дія", range: "5 фт навколо", theme: "druid", art: "sea", rarity: "mythic", costType: "resource", resId: "wild_shape", costLabel: "1 заряд Дикого обліку",
+      front: "На 10 хв оточуєш себе морськими бризками. При активації та бонусною дією щоходу обери ворога в 5 фт: ряток СТА (СЛ 12) або 2к6 холодом + поштовх на 15 фт.",
+      back: "Без концентрації! Працює навіть у формі звіра (Дикому обліку). Повторні удари бонусною дією не витрачають нові заряди.",
+      adv: "", dis: ""
+    },
+    {
+      id: "dr_wolf", name: "Дикий облік: Вовк", en: "Wild Shape: Wolf", level: "Звір", kind: "ability", school: "Дикий облік",
+      action: "Бонусна дія", range: "На себе", theme: "beast", art: "beast", rarity: "rare", costType: "resource", resId: "wild_shape", costLabel: "1 заряд Дикого обліку",
+      front: "КБ 12, швидкість 40 фт, +3 тимчасових НР (твої власні НР зберігаються). Укус: +4, шкода 1к6+2 і ціль падає ниць. ПЕРЕВАГА на атаку, якщо союзник поруч з ціллю.",
+      back: "До 1 год, без концентрації. Зберігаєш свої ІНТ/МУД/ХАР та концентрацію, можеш говорити, але не можеш творити заклинання.",
+      adv: "Зграйна тактика (перевага на атаку)", dis: ""
+    },
+    {
+      id: "dr_crab", name: "Дикий облік: Гігантський краб", en: "Giant Crab", level: "Звір", kind: "ability", school: "Дикий облік",
+      action: "Бонусна дія", range: "На себе", theme: "beast", art: "sea", rarity: "rare", costType: "resource", resId: "wild_shape", costLabel: "1 заряд Дикого обліку",
+      front: "КБ 15, хода/плавання 30 фт, сліпозір 30 фт, +3 тимч. НР. Клешня: +3, шкода 1к6+1 і ціль автоматично Схоплена (СЛ виривання 11).",
+      back: "До 1 год. У схопленої цілі швидкість 0, а її атаки не по крабу мають перешкоду. Можна говорити, але не кастувати.",
+      adv: "", dis: "Перешкода атакам схопленої цілі не по крабу"
+    },
+    {
+      id: "dr_octopus", name: "Дикий облік: Восьминіг", en: "Octopus / Rat", level: "Звір", kind: "ability", school: "Дикий облік",
+      action: "Бонусна дія", range: "На себе", theme: "beast", art: "beast", rarity: "common", costType: "resource", resId: "wild_shape", costLabel: "1 заряд Дикого обліку",
+      front: "Восьминіг (КБ 12, плавання 30 фт, Скритність +6, пролізає в щілини 1 дюйм, щупальця +4 на 1 шкоди + чорнильна хмара) АБО Щур (КБ 10, не провокує атак при відході).",
+      back: "До 1 год, +3 тимчасових НР. Восьминіг дихає лише під водою. Можна говорити, але не кастувати.",
+      adv: "", dis: ""
+    }
+  ],
+
+  paladin_glory: [
+    {
+      id: "pal_guidance", name: "Настанова", en: "Guidance", level: 0, kind: "spell", school: "Віщування",
+      action: "Дія", range: "Дотик", theme: "paladin", art: "holy", rarity: "common", costType: "free", costLabel: "Без комірки",
+      front: "Торкнися союзника й обери навичку: він додає +1к4 до перевірок цієї навички до 1 хвилини.",
+      back: "Концентрація до 1 хв. Компоненти: В, С. Від подвигу Магічний адепт.",
+      adv: "", dis: ""
+    },
+    {
+      id: "pal_sacred", name: "Священне полум'я", en: "Sacred Flame", level: 0, kind: "spell", school: "Втілення",
+      action: "Дія", range: "60 фт", theme: "paladin", art: "holy", rarity: "common", costType: "free", costLabel: "Без комірки",
+      front: "Небесний вогонь сходить на ворога: ряткидок СПР (СЛ 14) або 1к8 променистої шкоди. Ігнорує укриття!",
+      back: "Миттєво, без концентрації. Компоненти: В, С. Ти не кидаєш атаку — кидає ворог.",
+      adv: "", dis: ""
+    },
+    {
+      id: "pal_light", name: "Світло", en: "Light", level: 0, kind: "spell", school: "Втілення",
+      action: "Дія", range: "Дотик", theme: "paladin", art: "holy", rarity: "common", costType: "free", costLabel: "Без комірки",
+      front: "Торкнися предмета — він світить яскраво на 20 фт і тьмяно ще на 20 фт протягом 1 години.",
+      back: "Без концентрації. Видова риса Аасімара.",
+      adv: "", dis: ""
+    },
+    {
+      id: "pal_smite", name: "Божественна кара", en: "Divine Smite", level: 1, kind: "spell", school: "Втілення",
+      action: "Бонусна дія", range: "На себе", theme: "paladin", art: "smite", rarity: "mythic", costType: "free_or_slot", freeRes: "free_smite", slotLevel: 1, costLabel: "1/день безкоштовно або комірка",
+      front: "Активуй ОДРАЗУ ПІСЛЯ влучання зброєю! Додає +2к8 променистої шкоди (або +3к8 проти нежиті та нечисті). Не витрачається на промах!",
+      back: "Без концентрації. Компонент: В. При критичному влучанні кістки кари подвоюються! Одразу після кари можна застосувати «Надихаючу кару».",
+      adv: "", dis: "",
+      trigger: { title: "⚔ Божественна кара завдала удару!", desc: "Ви можете одразу без окремої дії витратити заряд Проведення божественності на «Надихаючу кару»!", targets: ["pal_inspiring"] }
+    },
+    {
+      id: "pal_inspiring", name: "Надихаюча кара", en: "Inspiring Smite", level: "Уміння", kind: "ability", school: "Клятва слави",
+      action: "Без дії", range: "30 фт", theme: "paladin", art: "holy", rarity: "mythic", costType: "resource", resId: "channel_div", costLabel: "1 Проведення божественності",
+      front: "Одразу після Божественної кари розподіли 2к8+3 тимчасових НР між обраними союзниками (і собою) у межах 30 фт.",
+      back: "Не потребує дії чи концентрації. Тимчасові НР не сумуються зі старими (обирається більше значення).",
+      adv: "", dis: ""
+    },
+    {
+      id: "pal_bless", name: "Благословення", en: "Bless", level: 1, kind: "spell", school: "Зачарування",
+      action: "Дія", range: "30 фт", theme: "paladin", art: "holy", rarity: "rare", costType: "slot", slotLevel: 1, costLabel: "1 комірка 1-го рівня",
+      front: "До 3 союзників (можна себе) додають +1к4 до КОЖНОГО кидка атаки та кожного ряткидка, поки ти тримаєш концентрацію.",
+      back: "Концентрація до 1 хв. Компоненти: В, С, М (священний символ).",
+      adv: "", dis: ""
+    },
+    {
+      id: "pal_favor", name: "Божественна прихильність", en: "Divine Favor", level: 1, kind: "spell", school: "Втілення",
+      action: "Бонусна дія", range: "На себе", theme: "paladin", art: "smite", rarity: "rare", costType: "slot", slotLevel: 1, costLabel: "1 комірка 1-го рівня",
+      front: "На 1 хвилину кожне твоє влучання зброєю додає +1к4 променистої шкоди. БЕЗ КОНЦЕНТРАЦІЇ в правилах 2024!",
+      back: "Компоненти: В, С. Оскільки це бонусна дія, у цей же хід не можна використати Божественну кару.",
+      adv: "", dis: ""
+    },
+    {
+      id: "pal_guiding", name: "Скеровуючий снаряд", en: "Guiding Bolt", level: 1, kind: "spell", school: "Втілення",
+      action: "Дія", range: "120 фт", theme: "paladin", art: "smite", rarity: "rare", costType: "slot", slotLevel: 1, costLabel: "1 комірка 1-го рівня",
+      front: "Спалах світла (+6 влучання): 4к6 променистої шкоди, а наступна атака по цій цілі отримує ПЕРЕВАГУ!",
+      back: "1 раунд, без концентрації. Компоненти: В, С. Перевага діє лише на один наступний удар.",
+      adv: "Перевага наступній атаці по цілі", dis: ""
+    },
+    {
+      id: "pal_command", name: "Наказ", en: "Command", level: 1, kind: "spell", school: "Зачарування",
+      action: "Дія", range: "60 фт", theme: "paladin", art: "holy", rarity: "rare", costType: "slot", slotLevel: 1, costLabel: "1 комірка 1-го рівня",
+      front: "Однослівний наказ ворогу (ряток МУД СЛ 14): Підійди, Кинь (зброю), Тікай, Впади (ниць) або Стій (пропускає дію).",
+      back: "Без концентрації. Компонент: В. Ціль виконує наказ у свій наступний хід.",
+      adv: "", dis: ""
+    },
+    {
+      id: "pal_cure", name: "Лікування ран", en: "Cure Wounds", level: 1, kind: "spell", school: "Огородження",
+      action: "Дія", range: "Дотик", theme: "paladin", art: "heal", rarity: "common", costType: "slot", slotLevel: 1, costLabel: "1 комірка 1-го рівня",
+      front: "Торкнися союзника (або себе) і віднови 2к8+4 НР миттєво.",
+      back: "Без концентрації. Компоненти: В, С. Потрібен фізичний дотик.",
+      adv: "", dis: ""
+    },
+    {
+      id: "pal_hword", name: "Цілюще слово", en: "Healing Word", level: 1, kind: "spell", school: "Огородження",
+      action: "Бонусна дія", range: "60 фт", theme: "paladin", art: "heal", rarity: "rare", costType: "free_or_slot", freeRes: "free_hword", slotLevel: 1, costLabel: "1/день безкоштовно або комірка",
+      front: "Дистанційне лікування на 60 фт: союзник (або ти) відновлює 2к4+4 НР (або 2к4+0 залежно від характеристики подвигу) і підіймається з 0 НР.",
+      back: "Бонусна дія, без концентрації. Компонент: В. Після цього можна атакувати зброєю за Дію!",
+      adv: "", dis: ""
+    },
+    {
+      id: "pal_heroism", name: "Героїзм", en: "Heroism", level: 1, kind: "spell", school: "Зачарування",
+      action: "Дія", range: "Дотик", theme: "paladin", art: "holy", rarity: "common", costType: "slot", slotLevel: 1, costLabel: "1 комірка 1-го рівня",
+      front: "Союзник стає імунним до страху й на початку кожного свого ходу отримує 4 тимчасові НР.",
+      back: "Концентрація до 1 хв. Компоненти: В, С.",
+      adv: "", dis: ""
+    },
+    {
+      id: "pal_lay", name: "Покладання рук (порція 5 НР)", en: "Lay on Hands", level: "Уміння", kind: "ability", school: "Паладин",
+      action: "Бонусна дія", range: "Дотик", theme: "paladin", art: "heal", rarity: "rare", costType: "resource", resId: "lay_hands", costLabel: "1 заряд (5 із 15 НР)",
+      front: "Бонусною дією торкнися союзника й віднови 5 НР (загальний запас 15 НР за тривалий відпочинок) АБО зніми стан «Отруєний» за 5 НР запасу.",
+      back: "Не заклинання, без концентрації. У D&D 2024 активується бонусною дією!",
+      adv: "", dis: ""
+    },
+    {
+      id: "pal_athlete", name: "Незрівнянний атлет", en: "Peerless Athlete", level: "Уміння", kind: "ability", school: "Клятва слави",
+      action: "Бонусна дія", range: "На себе", theme: "paladin", art: "smite", rarity: "common", costType: "resource", resId: "channel_div", costLabel: "1 Проведення божественності",
+      front: "На 1 годину отримуєш ПЕРЕВАГУ на всі перевірки Атлетики (СИЛ) та Акробатики (СПР), а стрибки стають довшими на +10 фт.",
+      back: "Без концентрації. Витрачає 1 заряд Проведення божественності.",
+      adv: "Перевага на Атлетику та Акробатику", dis: ""
+    },
+    {
+      id: "pal_sense", name: "Божественне чуття", en: "Divine Sense", level: "Уміння", kind: "ability", school: "Паладин",
+      action: "Бонусна дія", range: "60 фт", theme: "paladin", art: "holy", rarity: "common", costType: "resource", resId: "channel_div", costLabel: "1 Проведення божественності",
+      front: "На 10 хв відчуваєш точне місце та тип усіх небожителів, нечисті й нежиті в 60 фт, а також освячені/осквернені місця.",
+      back: "Без концентрації. Не виявляє звичайну магію чи брехню.",
+      adv: "", dis: ""
+    },
+    {
+      id: "pal_celestial", name: "Небесне одкровення", en: "Celestial Revelation", level: "Вид", kind: "ability", school: "Аасімар",
+      action: "Бонусна дія", range: "На себе", theme: "paladin", art: "holy", rarity: "mythic", costType: "resource", resId: "celestial_rev", costLabel: "1/день (Тривалий відпочинок)",
+      front: "На 1 хв обираєш форму: Крила (політ 30 фт), Внутрішнє сяйво (2 шкоди всім у 10 фт) або Некротичний саван (вороги в 10 фт — ряток ХАР СЛ 14 або Налякані). Раз за хід +2 шкоди до удару.",
+      back: "Без концентрації. У савані ти сам додаєш +2 некротичної шкоди, в інших образах — +2 променистої.",
+      adv: "", dis: ""
+    }
+  ],
+
+  bard_glamour: [
+    {
+      id: "bd_mockery", name: "Зла насмішка", en: "Vicious Mockery", level: 0, kind: "spell", school: "Зачарування",
+      action: "Дія", range: "60 фт", theme: "bard", art: "music", rarity: "common", costType: "free", costLabel: "Без комірки",
+      front: "Образь ворога магічним словом: ряток МУД (СЛ 14) або 1к6 психічної шкоди та ПЕРЕШКОДА на його наступну атаку!",
+      back: "Миттєво, без концентрації. Компонент: лише В (руки можуть бути зайняті). Чарівна магія не спрацьовує, бо не витрачено комірку.",
+      adv: "", dis: "Перешкода на наступну атаку цілі"
+    },
+    {
+      id: "bd_illusion", name: "Мала ілюзія", en: "Minor Illusion", level: 0, kind: "spell", school: "Ілюзія",
+      action: "Дія", range: "30 фт", theme: "bard", art: "illusion", rarity: "common", costType: "free", costLabel: "Без комірки",
+      front: "Створи звук (від шепоту до крику) АБО нерухомий образ предмета до 5×5 фт на 1 хвилину.",
+      back: "Без концентрації. Компоненти: С, М (замінює лютня). Викриття — перевірка Розслідування проти СЛ 14.",
+      adv: "", dis: ""
+    },
+    {
+      id: "bd_whispers", name: "Дисонуючий шепіт", en: "Dissonant Whispers", level: 1, kind: "spell", school: "Зачарування",
+      action: "Дія", range: "60 фт", theme: "bard", art: "music", rarity: "rare", costType: "slot", slotLevel: 1, costLabel: "1 комірка (1 або 2 рівня)",
+      front: "Моторошна мелодія в голові ворога: ряток МУД (СЛ 14) — провал: 3к6 психічної шкоди, і ціль негайно витрачає реакцію, щоб утекти від тебе (провокує атаки союзників!). Успіх — половина без втечі.",
+      back: "Миттєво, без концентрації. Комірка 2-го рівня: 4к6. Школа Зачарування — активує «Чарівну магію» Колегії чару!",
+      adv: "", dis: "",
+      trigger: { title: "✨ Спрацювала «Чарівна магія» Колегії чару!", desc: "Одразу БЕЗ ДІЇ обери істоту в 60 фт (ряток МУД СЛ 14): при провалі вона Зачарована або Налякана тобою на 1 хв! Також вільна Бонусна дія для Натхнення.", targets: ["bd_beguiling", "bd_insp", "bd_mantle"] }
+    },
+    {
+      id: "bd_charm", name: "Зачарування особистості", en: "Charm Person", level: 1, kind: "spell", school: "Зачарування",
+      action: "Дія", range: "30 фт", theme: "bard", art: "music", rarity: "common", costType: "slot", slotLevel: 1, costLabel: "1 комірка (1 або 2 рівня)",
+      front: "Гуманоїд робить ряток МУД (СЛ 14): при провалі вважає тебе щирим другом на 1 годину (ПЕРЕВАГА в тебе на соціальні перевірки з ним).",
+      back: "Без концентрації. Якщо ви б'єтеся з ним — у цілі ПЕРЕВАГА на ряткидок. Комірка 2-го рівня: +1 ціль. Активує «Чарівну магію»!",
+      adv: "Перевага на соціальні перевірки (якщо не в бою)", dis: "Перевага цілі на ряток, якщо йде бій",
+      trigger: { title: "✨ Спрацювала «Чарівна магія» Колегії чару!", desc: "Одразу БЕЗ ДІЇ можна накласти Зачарування або Переляк на іншу ціль у 60 фт через «Чарівну магію»!", targets: ["bd_beguiling", "bd_insp"] }
+    },
+    {
+      id: "bd_disguise", name: "Маскування", en: "Disguise Self", level: 1, kind: "spell", school: "Ілюзія",
+      action: "Дія", range: "На себе", theme: "bard", art: "illusion", rarity: "common", costType: "slot", slotLevel: 1, costLabel: "1 комірка 1-го рівня",
+      front: "На 1 годину ілюзорно змінюєш зовнішність, одяг, зброю та зріст (±1 фт). Голос не змінюється.",
+      back: "Без концентрації. Викриття — дія Вивчити (Розслідування проти СЛ 14). Школа Ілюзії — активує «Чарівну магію»!",
+      adv: "", dis: "",
+      trigger: { title: "✨ Спрацювала «Чарівна магія» Колегії чару!", desc: "Після ілюзії за комірку можна миттєво БЕЗ ДІЇ зачарувати або налякати свідка в 60 фт!", targets: ["bd_beguiling", "bd_insp"] }
+    },
+    {
+      id: "bd_faerie", name: "Вогонь фей", en: "Faerie Fire", level: 1, kind: "spell", school: "Втілення",
+      action: "Дія", range: "60 фт", theme: "bard", art: "illusion", rarity: "rare", costType: "slot", slotLevel: 1, costLabel: "1 комірка 1-го рівня",
+      front: "Підсвічує всіх у кубі 20 фт (ряток СПР СЛ 14): провал — істоти не можуть бути невидимими, а ВСІ АТАКИ по них мають ПЕРЕВАГУ!",
+      back: "Концентрація до 1 хв. Компонент: В. Союзники в кубі теж кидають ряткидок. Втілення — Чарівна магія не спрацьовує.",
+      adv: "Перевага на ВСІ атаки по підсвічених цілях", dis: "",
+      trigger: { title: "Бонусна дія вільна!", desc: "Ви можете підтримати союзника Бардівським натхненням або Мантією натхнення.", targets: ["bd_insp", "bd_mantle"] }
+    },
+    {
+      id: "bd_hword", name: "Цілюще слово", en: "Healing Word", level: 1, kind: "spell", school: "Огородження",
+      action: "Бонусна дія", range: "60 фт", theme: "bard", art: "heal", rarity: "rare", costType: "slot", slotLevel: 1, costLabel: "1 комірка (1 або 2 рівня)",
+      front: "Істота в 60 фт (можна себе) миттєво відновлює 2к4+4 НР і підіймається з 0 НР.",
+      back: "Бонусна дія, без концентрації. Комірка 2-го рівня: 4к4+4 НР. Після цього можна атакувати чи кастувати замовляння за Дію!",
+      adv: "", dis: "",
+      trigger: { title: "Бонусне лікування виконано!", desc: "Основна Дія ще вільна — можете вдарити кинджалом або накласти Злу насмішку / Малу ілюзію.", targets: ["bd_mockery", "bd_illusion"] }
+    },
+    {
+      id: "bd_suggestion", name: "Навіювання", en: "Suggestion", level: 2, kind: "spell", school: "Зачарування",
+      action: "Дія", range: "30 фт", theme: "bard", art: "music", rarity: "mythic", costType: "slot", slotLevel: 2, costLabel: "1 комірка 2-го рівня",
+      front: "Запропонуй істоті розумну дію до 25 слів (не самогубство). Ряток МУД (СЛ 14): провал — вона зачарована і виконує прохання до 8 годин!",
+      back: "Концентрація до 8 год. Компоненти: В, М (лютня). Активує «Чарівну магію» Колегії чару!",
+      adv: "", dis: "",
+      trigger: { title: "✨ Спрацювала «Чарівна магія» Колегії чару!", desc: "Одразу БЕЗ ДІЇ можна зачарувати або налякати ще одну істоту в 60 фт!", targets: ["bd_beguiling"] }
+    },
+    {
+      id: "bd_invis", name: "Невидимість", en: "Invisibility", level: 2, kind: "spell", school: "Ілюзія",
+      action: "Дія", range: "Дотик", theme: "bard", art: "illusion", rarity: "mythic", costType: "slot", slotLevel: 2, costLabel: "1 комірка 2-го рівня",
+      front: "Торкнися союзника (або себе) — він невидимий на 1 годину: атаки по ньому з ПЕРЕШКОДОЮ, його перша атака — з ПЕРЕВАГОЮ!",
+      back: "Концентрація до 1 год. Злітає після атаки чи заклинання. Активує «Чарівну магію»!",
+      adv: "Перевага на атаки невидимого", dis: "Перешкода ворогам атакувати невидимого",
+      trigger: { title: "✨ Спрацювала «Чарівна магія» Колегії чару!", desc: "Одразу БЕЗ ДІЇ зачаруйте або налякайте ворога в 60 фт!", targets: ["bd_beguiling"] }
+    },
+    {
+      id: "bd_mirror", name: "Відображення", en: "Mirror Image", level: 2, kind: "spell", school: "Ілюзія",
+      action: "Дія", range: "На себе", theme: "bard", art: "illusion", rarity: "mythic", costType: "slot", slotLevel: 2, costLabel: "1 комірка 2-го рівня",
+      front: "3 ілюзорні двійники навколо тебе на 1 хв. Коли ворог влучає в тебе, кинь к6 за кожного двійника: 3+ — удар влучає в копію замість тебе!",
+      back: "Без концентрації! Завжди підготовлене від Колегії чару. Активує «Чарівну магію»!",
+      adv: "", dis: "",
+      trigger: { title: "✨ Спрацювала «Чарівна магія» Колегії чару!", desc: "Одразу БЕЗ ДІЇ можна зачарувати або налякати ворога в 60 фт!", targets: ["bd_beguiling", "bd_mantle"] }
+    },
+    {
+      id: "bd_insp", name: "Бардівське натхнення", en: "Bardic Inspiration", level: "Уміння", kind: "ability", school: "Бард",
+      action: "Бонусна дія", range: "60 фт", theme: "bard", art: "music", rarity: "rare", costType: "resource", resId: "bard_insp", costLabel: "1 Бардівське натхнення",
+      front: "Подаруй союзнику кістку к6 на 1 годину. Коли він провалює атаку, ряткидок чи перевірку — може кинути к6 і додати до результату!",
+      back: "Вимагає Бонусну дію (лише 1 раз за ваш хід!). Оплачує також «Мантію натхнення» та відновлення «Чарівної магії».",
+      adv: "", dis: ""
+    },
+    {
+      id: "bd_mantle", name: "Мантія натхнення", en: "Mantle of Inspiration", level: "Уміння", kind: "ability", school: "Колегія чару",
+      action: "Бонусна дія", range: "60 фт", theme: "bard", art: "music", rarity: "mythic", costType: "resource", resId: "bard_insp", costLabel: "1 Бардівське натхнення",
+      front: "Кинь к6: до 4 союзників у 60 фт отримують (2 × результат к6) тимчасових НР і можуть реакцією переміститися на свою швидкість БЕЗ провокації атак!",
+      back: "Вимагає Бонусну дію (1 раз за ваш хід!). Себе обрати не можна. Ідеально витягує союзників з оточення.",
+      adv: "", dis: ""
+    },
+    {
+      id: "bd_beguiling", name: "Чарівна магія", en: "Beguiling Magic", level: "Уміння", kind: "ability", school: "Колегія чару",
+      action: "Без дії", range: "60 фт", theme: "bard", art: "illusion", rarity: "mythic", costType: "resource", resId: "beguiling", costLabel: "1/день (або 1 Натхнення)",
+      front: "Одразу після заклинання Зачарування або Ілюзії за комірку: обери істоту в 60 фт — ряток МУД (СЛ 14) або вона на 1 хв Зачарована чи Налякана!",
+      back: "Не потребує дії! Якщо заряд витрачено, можна перезарядити за 1 Бардівське натхнення.",
+      adv: "", dis: ""
+    }
+  ],
+
+  custom: []
+};
+
+// ============================================================================
+// APP STATE, ANTI-SPAM & STRICT TURN ECONOMY ENGINE
+// ============================================================================
+
+let appRole = null;
+let isLocalOnly = false;
+let peer = null;
+let gmConn = null;
+let playerConns = {};
+let roomCode = "";
+
+let playerState = null;
+let spellFilter = "all";
+let flippedCards = {};
+let activeCombo = null;
+let lastActionTimestamp = 0;
+
+let turnState = {
+  active: false,
+  actionUsed: false,
+  bonusUsed: false,
+  reactionUsed: false,
+  slotSpent: false,
+  specialUnlocked: []
+};
+
+let gmPlayers = {};
+let initiativeOrder = [];
+let initiativeTurn = 0;
+
+function showToast(msg, ms = 3200) {
+  const el = document.getElementById("toastBox");
+  el.textContent = msg;
+  el.classList.remove("hidden");
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(() => el.classList.add("hidden"), ms);
+}
+
+function openChoiceDialog(title, body, primaryLabel, secondaryLabel, onPrimary, onSecondary) {
+  const modal = document.getElementById("choiceModal");
+  document.getElementById("modalTitle").textContent = title;
+  document.getElementById("modalBody").textContent = body;
+  const pBtn = document.getElementById("modalPrimaryBtn");
+  const sBtn = document.getElementById("modalSecondaryBtn");
+  pBtn.textContent = primaryLabel;
+  sBtn.textContent = secondaryLabel;
+
+  pBtn.onclick = () => {
+    modal.classList.add("hidden");
+    if (onPrimary) onPrimary();
+  };
+  sBtn.onclick = () => {
+    modal.classList.add("hidden");
+    if (onSecondary) onSecondary();
+  };
+
+  modal.classList.remove("hidden");
+}
+
+function setConnStatus(state, text) {
+  const dot = document.getElementById("connDot");
+  const txt = document.getElementById("connText");
+  dot.className = "gem-dot " + (state || "");
+  txt.textContent = text;
+}
+
+function genRoomCode() {
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let out = "";
+  for (let i = 0; i < 5; i++) out += chars[Math.floor(Math.random() * chars.length)];
+  return out;
+}
+
+function getMod(score) {
+  return Math.floor((Number(score || 10) - 10) / 2);
+}
+
+function fmtMod(m) {
+  return m >= 0 ? `+${m}` : `${m}`;
+}
+
+// ============================================================================
+// LOBBY ACTIONS
+// ============================================================================
+
+function selectPreset(key) {
+  document.querySelectorAll(".preset-tile").forEach(b => b.classList.remove("active"));
+  const btn = document.getElementById("preset-" + key);
+  if (btn) btn.classList.add("active");
+
+  const p = PRESETS[key];
+  document.getElementById("joinName").value = p.name;
+  document.getElementById("joinClassSelect").value = p.classKey;
+}
+
+function onJoinClassChange() {
+  const val = document.getElementById("joinClassSelect").value;
+  const map = { druid_sea: "anatoliy", paladin_glory: "dzhenik", bard_glamour: "bard", custom: "custom" };
+  const pKey = map[val] || "custom";
+  document.querySelectorAll(".preset-tile").forEach(b => b.classList.remove("active"));
+  const btn = document.getElementById("preset-" + pKey);
+  if (btn) btn.classList.add("active");
+}
+
+function buildInitialPlayerState(presetKey, customName, classKey) {
+  const base = JSON.parse(JSON.stringify(PRESETS[presetKey] || PRESETS.custom));
+  if (customName && customName.trim()) base.name = customName.trim();
+  if (classKey && classKey !== base.classKey) {
+    base.classKey = classKey;
+    const names = {
+      druid_sea: "Друїд (Коло моря)",
+      paladin_glory: "Паладин (Клятва слави)",
+      bard_glamour: "Бард (Колегія чару)",
+      custom: "Власний клас"
+    };
+    base.className = names[classKey] || "Власний клас";
+  }
+  base.id = "pl_" + Math.random().toString(36).slice(2, 9);
+  base.locked = false;
+  base.customCards = [];
+  return base;
+}
+
+function joinAsPlayer(localMode) {
+  const nameVal = document.getElementById("joinName").value.trim() || "Герой";
+  const classVal = document.getElementById("joinClassSelect").value;
+  const codeVal = document.getElementById("joinRoomCode").value.trim().toUpperCase();
+
+  if (!localMode && !codeVal) {
+    showToast("Введіть код кімнати ГМ або натисніть «🕯 Локально» для гри без мережі.");
+    return;
+  }
+
+  const presetMap = { druid_sea: "anatoliy", paladin_glory: "dzhenik", bard_glamour: "bard", custom: "custom" };
+  const pKey = presetMap[classVal] || "custom";
+
+  const saveKey = "prismerk_char_v4_" + nameVal.toLowerCase() + "_" + classVal;
+  const saved = localStorage.getItem(saveKey);
+  if (saved) {
+    try {
+      playerState = JSON.parse(saved);
+    } catch (e) {
+      playerState = buildInitialPlayerState(pKey, nameVal, classVal);
+    }
+  } else {
+    playerState = buildInitialPlayerState(pKey, nameVal, classVal);
+  }
+
+  appRole = "player";
+  isLocalOnly = !!localMode;
+  roomCode = codeVal;
+
+  document.getElementById("lobbyView").classList.add("hidden");
+  document.getElementById("playerView").classList.remove("hidden");
+  document.getElementById("btnLeave").classList.remove("hidden");
+
+  renderPlayerSheet();
+
+  if (isLocalOnly) {
+    setConnStatus("ok", "Локальний фоліант (офлайн)");
+    showToast("Сторінку героя відкрито в автономному режимі.");
+    return;
+  }
+
+  if (typeof Peer === "undefined") {
+    setConnStatus("err", "PeerJS недоступний");
+    showToast("Бібліотека зв'язку не завантажилася — оберіть «🕯 Локально».");
+    return;
+  }
+
+  setConnStatus("wait", `Підключення до ${roomCode}...`);
+  peer = new Peer();
+
+  peer.on("open", () => {
+    gmConn = peer.connect("PRISMERK-GM-" + roomCode, { reliable: true });
+
+    gmConn.on("open", () => {
+      setConnStatus("ok", `Кімната ${roomCode}`);
+      showToast("Підключено до столу Гейм Майстра!");
+      sendToGM({ type: "sync_player", state: playerState });
+    });
+
+    gmConn.on("data", data => handlePlayerIncoming(data));
+
+    gmConn.on("close", () => {
+      setConnStatus("err", "Зв'язок із ГМ перервано");
+      showToast("З'єднання з Гейм Майстром втрачено.");
+    });
+
+    gmConn.on("error", () => {
+      setConnStatus("err", "Помилка підключення");
+    });
+  });
+
+  peer.on("error", () => {
+    setConnStatus("err", "Кімнату не знайдено");
+    showToast("Не вдалося знайти кімнату " + roomCode + ". Перевірте код у ГМ.");
+  });
+}
+
+function hostAsGM() {
+  if (typeof Peer === "undefined") {
+    showToast("Немає з'єднання з сервером PeerJS. Перевірте інтернет.");
+    return;
+  }
+
+  appRole = "gm";
+  roomCode = genRoomCode();
+  document.getElementById("lobbyView").classList.add("hidden");
+  document.getElementById("gmView").classList.remove("hidden");
+  document.getElementById("btnLeave").classList.remove("hidden");
+  document.getElementById("btnCopyInvite").classList.remove("hidden");
+  document.getElementById("gmRoomCodeDisp").textContent = roomCode;
+
+  const savedNotes = localStorage.getItem("prismerk_gm_notes");
+  if (savedNotes) document.getElementById("gmSecretNotes").value = savedNotes;
+
+  setConnStatus("wait", "Запалюємо свічу...");
+  peer = new Peer("PRISMERK-GM-" + roomCode);
+
+  peer.on("open", () => {
+    setConnStatus("ok", `Стіл ГМ • Код: ${roomCode}`);
+    addGmLog(`Кімнату ${roomCode} створено. Очікування мандрівників...`);
+    renderGmDashboard();
+  });
+
+  peer.on("connection", conn => {
+    conn.on("open", () => {
+      addGmLog("Нове підключення до столу...");
+      conn.send({ type: "initiative_update", list: initiativeOrder, turn: initiativeTurn });
+    });
+
+    conn.on("data", data => handleGmIncoming(conn, data));
+
+    conn.on("close", () => {
+      const pid = Object.keys(gmPlayers).find(k => gmPlayers[k].connId === conn.peer);
+      if (pid && gmPlayers[pid]) {
+        addGmLog(`${gmPlayers[pid].state.name} закрив книгу.`);
+        delete playerConns[pid];
+        renderGmDashboard();
+      }
+    });
+  });
+
+  peer.on("error", err => {
+    setConnStatus("err", "Помилка мережі ГМ");
+    showToast("Помилка PeerJS: " + err.type);
+  });
+}
+
+function copyInviteLink() {
+  const url = new URL(window.location.href);
+  url.searchParams.set("room", roomCode);
+  const textToCopy = url.toString();
+
+  const tempInput = document.createElement("input");
+  tempInput.value = textToCopy;
+  document.body.appendChild(tempInput);
+  tempInput.select();
+  try {
+    document.execCommand("copy");
+    showToast("Посилання з кодом " + roomCode + " скопійовано! Скидайте гравцям.");
+  } catch (e) {
+    showToast("Код кімнати: " + roomCode);
+  }
+  document.body.removeChild(tempInput);
+}
+
+function leaveSession() {
+  if (peer) {
+    peer.destroy();
+    peer = null;
+  }
+  gmConn = null;
+  playerConns = {};
+  appRole = null;
+  document.getElementById("playerView").classList.add("hidden");
+  document.getElementById("gmView").classList.add("hidden");
+  document.getElementById("initStrip").classList.add("hidden");
+  document.getElementById("btnLeave").classList.add("hidden");
+  document.getElementById("btnCopyInvite").classList.add("hidden");
+  document.getElementById("lobbyView").classList.remove("hidden");
+  setConnStatus("", "Фоліант закрито • Оберіть сторінку");
+}
+
+// ============================================================================
+// SYNC HELPERS
+// ============================================================================
+
+function savePlayerLocal() {
+  if (!playerState) return;
+  const saveKey = "prismerk_char_v4_" + playerState.name.toLowerCase() + "_" + playerState.classKey;
+  localStorage.setItem(saveKey, JSON.stringify(playerState));
+}
+
+function sendToGM(payload) {
+  savePlayerLocal();
+  if (!isLocalOnly && gmConn && gmConn.open) {
+    gmConn.send(payload);
+  }
+}
+
+function handlePlayerIncoming(data) {
+  if (!data || !playerState) return;
+  if (data.type === "gm_patch") {
+    Object.assign(playerState, data.patch);
+    savePlayerLocal();
+    renderPlayerSheet();
+    if (data.notice) showToast("👑 ГМ: " + data.notice);
+  } else if (data.type === "initiative_update") {
+    initiativeOrder = data.list || [];
+    initiativeTurn = data.turn || 0;
+    renderInitiativeStrip();
+  }
+}
+
+function handleGmIncoming(conn, data) {
+  if (!data) return;
+  if (data.type === "sync_player" && data.state) {
+    const st = data.state;
+    gmPlayers[st.id] = { state: st, connId: conn.peer };
+    playerConns[st.id] = conn;
+    renderGmDashboard();
+    conn.send({ type: "initiative_update", list: initiativeOrder, turn: initiativeTurn });
+  } else if (data.type === "player_event") {
+    if (data.state) {
+      gmPlayers[data.state.id] = { state: data.state, connId: conn.peer };
+      playerConns[data.state.id] = conn;
+    }
+    addGmLog(`<strong>${data.actor}</strong>: ${data.message}`);
+    renderGmDashboard();
+  }
+}
+
+// ============================================================================
+// PLAYER SHEET RENDERING & LOGIC
+// ============================================================================
+
+function switchPlayerTab(tab) {
+  ["profile", "spells", "inventory", "rules"].forEach(t => {
+    document.getElementById("sec-" + t).classList.toggle("hidden", t !== tab);
+    document.getElementById("tabBtn-" + t).classList.toggle("active", t === tab);
+  });
+}
+
+function getPlayerDeck() {
+  if (!playerState) return [];
+  const baseCards = CLASS_CARDS[playerState.classKey] || [];
+  const custom = playerState.customCards || [];
+  return [...baseCards, ...custom];
+}
+
+function renderPlayerSheet() {
+  if (!playerState) return;
+  const st = playerState;
+  const locked = !!st.locked;
+
+  document.getElementById("dispHeroName").textContent = st.name;
+  document.getElementById("dispHeroMeta").textContent = `${st.race} • ${st.className} • ${st.level} рівень`;
+
+  const banner = document.getElementById("lockStatusBanner");
+  const lockBtn = document.getElementById("btnLockSheet");
+  const editBlock = document.getElementById("profileEditBlock");
+
+  if (locked) {
+    banner.textContent = "🔒 Аркуш затверджено (ХП і комірки у ГМ)";
+    banner.classList.add("locked");
+    lockBtn.classList.add("hidden");
+    editBlock.classList.add("hidden");
+  } else {
+    banner.textContent = "🔓 Режим заповнення";
+    banner.classList.remove("locked");
+    lockBtn.classList.remove("hidden");
+    editBlock.classList.remove("hidden");
+  }
+
+  document.getElementById("inpName").value = st.name;
+  document.getElementById("inpRace").value = st.race;
+  document.getElementById("inpClassKey").value = st.classKey;
+  document.getElementById("inpLevel").value = st.level;
+  document.getElementById("inpMaxHp").value = st.maxHp;
+  document.getElementById("inpAc").value = st.ac;
+  document.getElementById("inpSpeed").value = st.speed;
+  document.getElementById("inpProf").value = st.prof;
+
+  document.getElementById("inpAttacks").value = st.attacks || "";
+  document.getElementById("inpTraits").value = st.traits || "";
+  document.getElementById("inpAttacks").disabled = locked;
+  document.getElementById("inpTraits").disabled = locked;
+
+  document.getElementById("dispCurHp").textContent = st.curHp;
+  document.getElementById("dispMaxHp").textContent = st.maxHp;
+  document.getElementById("dispTempHp").textContent = st.tempHp > 0 ? `(+${st.tempHp} тимч.)` : "";
+  const pct = Math.max(0, Math.min(100, Math.round((st.curHp / Math.max(1, st.maxHp)) * 100)));
+  document.getElementById("hpBarFill").style.width = pct + "%";
+
+  const dexMod = getMod(st.stats.dex);
+  const castMod = getMod(st.stats[st.castStat || "cha"]);
+  document.getElementById("dispAc").textContent = st.ac;
+  document.getElementById("dispInit").textContent = fmtMod(dexMod);
+  document.getElementById("dispSpellDc").textContent = 8 + (st.prof || 2) + castMod;
+  document.getElementById("dispSpellAtk").textContent = fmtMod((st.prof || 2) + castMod);
+
+  const statLabels = [
+    ["str", "СИЛ"], ["dex", "СПР"], ["con", "СТА"],
+    ["int", "ІНТ"], ["wis", "МУД"], ["cha", "ХАР"]
+  ];
+  const statsGrid = document.getElementById("statsGrid");
+  statsGrid.innerHTML = statLabels.map(([k, lbl]) => {
+    const val = st.stats[k] ?? 10;
+    const mod = getMod(val);
+    return `
+      <div class="ability-plaque">
+        <div class="ability-abbr">${lbl}</div>
+        <div class="ability-mod">${fmtMod(mod)}</div>
+        <input class="ability-score-inp" type="number" min="1" max="30" value="${val}"
+          ${locked ? "disabled" : ""} onchange="updateStat('${k}', +this.value)" />
+      </div>
+    `;
+  }).join("");
+
+  renderSlotsAndResources();
+  renderTurnEconomyBar();
+  renderSpellCards();
+  renderInventory();
+}
+
+function renderSlotsAndResources() {
+  const st = playerState;
+  let html = "";
+
+  [1, 2].forEach(lvl => {
+    const slot = st.slots[lvl];
+    if (slot && slot.max > 0) {
+      let gems = "";
+      for (let i = 0; i < slot.max; i++) {
+        const isSpent = i < slot.used;
+        gems += `<span class="rune-gem ${isSpent ? "spent" : ""}" title="${isSpent ? "Витрачено" : "Доступно"}"></span>`;
+      }
+      html += `
+        <div class="rune-cluster">
+          <div class="rune-cluster-lbl">${lvl}-й рівень (${slot.max - slot.used}/${slot.max}):</div>
+          <div class="rune-gems">${gems}</div>
+        </div>
+      `;
+    }
+  });
+
+  (st.resources || []).forEach(res => {
+    let gems = "";
+    for (let i = 0; i < res.max; i++) {
+      const isSpent = i < res.used;
+      gems += `<span class="rune-gem class-res ${isSpent ? "spent" : ""}"></span>`;
+    }
+    html += `
+      <div class="rune-cluster">
+        <div class="rune-cluster-lbl">${res.name} (${res.max - res.used}/${res.max}):</div>
+        <div class="rune-gems">${gems}</div>
+      </div>
+    `;
+  });
+
+  if (!html) {
+    html = `<span style="font-size:13px; color:var(--ink-muted);">У цього профілю немає налаштованих комірок.</span>`;
+  }
+
+  document.getElementById("resourcesDisplay").innerHTML = html;
+  document.getElementById("miniSlotsBar").innerHTML = html;
+}
+
+function renderTurnEconomyBar() {
+  const actEl = document.getElementById("eco-action");
+  const bonEl = document.getElementById("eco-bonus");
+  const sltEl = document.getElementById("eco-slot");
+  const reaEl = document.getElementById("eco-reaction");
+
+  actEl.classList.toggle("spent", turnState.actionUsed);
+  actEl.innerHTML = `<span class="eco-dot"></span> Дія (${turnState.actionUsed ? "0/1" : "1/1"})`;
+
+  bonEl.classList.toggle("spent", turnState.bonusUsed);
+  bonEl.innerHTML = `<span class="eco-dot"></span> Бонусна (${turnState.bonusUsed ? "0/1" : "1/1"})`;
+
+  sltEl.classList.toggle("spent", turnState.slotSpent);
+  sltEl.innerHTML = `<span class="eco-dot"></span> Комірка за хід (${turnState.slotSpent ? "0/1" : "1/1"})`;
+
+  reaEl.classList.toggle("spent", turnState.reactionUsed);
+  reaEl.innerHTML = `<span class="eco-dot"></span> Реакція (${turnState.reactionUsed ? "0/1" : "1/1"})`;
+}
+
+function updateField(field, val) {
+  if (!playerState || playerState.locked) return;
+  playerState[field] = val;
+  renderPlayerSheet();
+  sendToGM({ type: "sync_player", state: playerState });
+}
+
+function updateMaxHp(val) {
+  if (!playerState || playerState.locked) return;
+  const v = Math.max(1, val || 1);
+  playerState.maxHp = v;
+  playerState.curHp = v;
+  renderPlayerSheet();
+  sendToGM({ type: "sync_player", state: playerState });
+}
+
+function updateStat(statKey, val) {
+  if (!playerState || playerState.locked) return;
+  playerState.stats[statKey] = Math.max(1, Math.min(30, val || 10));
+  renderPlayerSheet();
+  sendToGM({ type: "sync_player", state: playerState });
+}
+
+function changeCharacterClass(newClassKey) {
+  if (!playerState || playerState.locked) return;
+  const map = { druid_sea: "anatoliy", paladin_glory: "dzhenik", bard_glamour: "bard", custom: "custom" };
+  const preset = PRESETS[map[newClassKey] || "custom"];
+  playerState.classKey = newClassKey;
+  playerState.className = preset.className;
+  playerState.castStat = preset.castStat;
+  playerState.slots = JSON.parse(JSON.stringify(preset.slots));
+  playerState.resources = JSON.parse(JSON.stringify(preset.resources));
+  activeCombo = null;
+  renderPlayerSheet();
+  sendToGM({ type: "sync_player", state: playerState });
+}
+
+function lockPlayerSheet() {
+  if (!playerState) return;
+  playerState.locked = true;
+  renderPlayerSheet();
+  sendToGM({
+    type: "player_event",
+    actor: playerState.name,
+    message: `затвердив свій аркуш персонажа (${playerState.className}, ${playerState.curHp}/${playerState.maxHp} НР).`,
+    state: playerState
+  });
+  showToast("Аркуш затверджено! Тепер ХП та комірки контролює ГМ.");
+}
+
+// ============================================================================
+// COLLECTIBLE MTG-STYLE 3D CARDS & STRICT TURN ECONOMY
+// ============================================================================
+
+function setSpellFilter(f) {
+  spellFilter = f;
+  document.querySelectorAll(".filter-chip").forEach(p => {
+    p.classList.toggle("active", p.dataset.filter === f);
+  });
+  renderSpellCards();
+}
+
+function toggleFlipCard(cardId) {
+  flippedCards[cardId] = !flippedCards[cardId];
+  const stage = document.getElementById("card-" + cardId);
+  if (stage) {
+    stage.classList.toggle("flipped", !!flippedCards[cardId]);
+  } else {
+    renderSpellCards();
+  }
+}
+
+function endPlayerTurn() {
+  activeCombo = null;
+  turnState = {
+    active: false,
+    actionUsed: false,
+    bonusUsed: false,
+    reactionUsed: false,
+    slotSpent: false,
+    specialUnlocked: []
+  };
+  document.getElementById("comboBanner").classList.add("hidden");
+  renderTurnEconomyBar();
+  renderSpellCards();
+  showToast("Новий раунд! Дію, бонусну дію та ліміт комірки відновлено.");
+  if (playerState) {
+    sendToGM({
+      type: "player_event",
+      actor: playerState.name,
+      message: "завершив свій хід (початок нового раунду).",
+      state: playerState
+    });
+  }
+}
+
+function focusCard(cardId) {
+  spellFilter = "all";
+  document.querySelectorAll(".filter-chip").forEach(p => p.classList.toggle("active", p.dataset.filter === "all"));
+  renderSpellCards();
+  const el = document.getElementById("card-" + cardId);
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+function willCardSpendSlot(c) {
+  if (c.costType === "slot") return true;
+  if (c.costType === "free_or_slot") {
+    const res = (playerState.resources || []).find(r => r.id === c.freeRes);
+    const hasFreeCharge = res && res.used < res.max;
+    return !hasFreeCharge;
+  }
+  return false;
+}
+
+function isCardAllowedInCurrentTurn(c) {
+  // Unlocked special combo triggers (e.g. Beguiling Magic, Inspiring Smite)
+  if (turnState.specialUnlocked.includes(c.id)) {
+    return { allowed: true, reason: "" };
+  }
+
+  // Reactions happen out-of-turn
+  if (c.action === "Реакція") {
+    if (turnState.reactionUsed) return { allowed: false, reason: "Реакцію в цьому раунді використано" };
+    if (turnState.slotSpent && willCardSpendSlot(c)) {
+      return { allowed: false, reason: "Комірку за хід уже витрачено" };
+    }
+    return { allowed: true, reason: "" };
+  }
+
+  if (!turnState.active) return { allowed: true, reason: "" };
+
+  // Strict D&D 2024 rule: max 1 spell slot spent per turn
+  if (turnState.slotSpent && willCardSpendSlot(c)) {
+    return { allowed: false, reason: "Ліміт: 1 комірка за хід" };
+  }
+
+  if ((c.action === "Дія" || c.action === "Ритуал / Дія") && turnState.actionUsed) {
+    return { allowed: false, reason: "Основну Дію витрачено" };
+  }
+
+  // Strict Bonus Action limit: Bardic Inspiration, Mantle of Inspiration, Healing Word, Wild Shape, etc.
+  if (c.action === "Бонусна дія" && turnState.bonusUsed) {
+    return { allowed: false, reason: "Бонусну дію витрачено" };
+  }
+
+  if (c.action === "Без дії" && !turnState.specialUnlocked.includes(c.id)) {
+    return { allowed: false, reason: "Потрібна умова активації" };
+  }
+
+  return { allowed: true, reason: "" };
+}
+
+function renderSpellCards() {
+  const fullDeck = getPlayerDeck();
+  document.getElementById("spellsCountBadge").textContent = fullDeck.length;
+
+  // Assign stable collector numbers (001/018)
+  const numberedDeck = fullDeck.map((card, index) => ({
+    ...card,
+    collectorNum: `${String(index + 1).padStart(3, "0")}/${String(fullDeck.length).padStart(3, "0")}`
+  }));
+
+  let filtered = numberedDeck.filter(c => {
+    if (spellFilter === "all") return true;
+    if (spellFilter === "0") return c.level === 0;
+    if (spellFilter === "1") return c.level === 1;
+    if (spellFilter === "2") return c.level === 2;
+    if (spellFilter === "ability") return c.kind === "ability";
+    if (spellFilter === "bonus") return c.action === "Бонусна дія" || c.action === "Реакція" || c.action === "Без дії";
+    return true;
+  });
+
+  const highlightedIds = (activeCombo && activeCombo.targets) || [];
+
+  // Promote cards still legally usable in this turn to the top
+  if (turnState.active) {
+    filtered = [...filtered].sort((a, b) => {
+      const aAvail = isCardAllowedInCurrentTurn(a).allowed && checkCardAvailability(a).canUse;
+      const bAvail = isCardAllowedInCurrentTurn(b).allowed && checkCardAvailability(b).canUse;
+      const aPriority = highlightedIds.includes(a.id) ? 3 : (aAvail ? 2 : 0);
+      const bPriority = highlightedIds.includes(b.id) ? 3 : (bAvail ? 2 : 0);
+      return bPriority - aPriority;
+    });
+  }
+
+  const grid = document.getElementById("spellCardsGrid");
+  if (!filtered.length) {
+    grid.innerHTML = `<div class="folio-box" style="grid-column:1/-1; text-align:center; color:var(--ink-muted);">У цій категорії поки немає карток.</div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(c => {
+    const isFlipped = !!flippedCards[c.id];
+    const status = checkCardAvailability(c);
+    const turnCheck = isCardAllowedInCurrentTurn(c);
+    const isTurnLocked = turnState.active && !turnCheck.allowed;
+    const isFollowUpReady = turnState.active && turnCheck.allowed && status.canUse;
+    const isHighlighted = highlightedIds.includes(c.id) || isFollowUpReady;
+
+    let manaBadge = c.level === 0 ? "0" : (c.level === 1 ? "I" : (c.level === 2 ? "II" : "★"));
+    let typeLine = c.level === 0
+      ? `Замовляння — ${c.school} • ${c.action}`
+      : (typeof c.level === "number"
+        ? `Заклинання ${c.level}-го рівня — ${c.school}`
+        : `${c.level} — ${c.school} • ${c.action}`);
+
+    let actionClass = c.action === "Бонусна дія" ? "bonus" : (c.action === "Реакція" ? "reaction" : "");
+    let hasConc = (c.back || "").toLowerCase().includes("концентрація до");
+    let artSvg = getCardArtSVG(c.art || "holy");
+
+    return `
+      <div class="mtg-card-stage ${isFlipped ? "flipped" : ""} ${isHighlighted ? "turn-available-glow" : ""} ${isTurnLocked ? "turn-locked" : ""} ${!status.canUse ? "out-of-charges" : ""}" id="card-${c.id}">
+        <div class="mtg-card-inner">
+          <!-- ==================== FRONT FACE ==================== -->
+          <div class="mtg-face mtg-face-front">
+            <div class="mtg-inner-frame ${c.theme || ""}">
+              <div class="mtg-nameplate ${c.theme || ""}">
+                <div class="mtg-card-title">${c.name}</div>
+                <div class="mtg-mana-gem" title="${c.costLabel}">${manaBadge}</div>
+              </div>
+
+              <div class="mtg-art-window">
+                ${artSvg}
+                <div class="mtg-art-caption">${c.range}</div>
+              </div>
+
+              <div class="mtg-typeline">
+                <span>${typeLine}</span>
+                <span class="rarity-gem ${c.rarity || ""}" title="Рідкість карти"></span>
+              </div>
+
+              ${isTurnLocked ? `
+                <div class="turn-lock-strip">🔒 ${turnCheck.reason}</div>
+              ` : ""}
+
+              <div class="mtg-textbox">
+                <div>${c.front}</div>
+                <div class="mtg-badges-row">
+                  <span class="tag-pill ${actionClass}">${c.action}</span>
+                  ${hasConc ? `<span class="tag-pill conc">Концентрація</span>` : ""}
+                  ${isHighlighted ? `<span class="tag-pill combo">⚡ Доступно в цей хід</span>` : ""}
+                  ${c.adv ? `<span class="pill-adv">▲ Перевага: ${c.adv}</span>` : ""}
+                  ${c.dis ? `<span class="pill-dis">▼ Перешкода: ${c.dis}</span>` : ""}
+                </div>
+              </div>
+
+              <div class="mtg-card-actions">
+                <button class="btn btn-xs" onclick="toggleFlipCard('${c.id}')">↺ Умови</button>
+                <span style="font-size:11px; font-weight:700; color:var(--ink-soft); text-align:center;">${status.shortStatus}</span>
+                <button class="btn btn-crimson btn-xs" ${(!status.canUse || isTurnLocked) ? "disabled" : ""} onclick="useSpellCard('${c.id}')">
+                  ✨ Застосувати
+                </button>
+              </div>
+            </div>
+
+            <div class="mtg-collector-bar">
+              <span>${c.collectorNum} • PRISMERK</span>
+              <span>${c.en || "D&D 2024"}</span>
+            </div>
+          </div>
+
+          <!-- ==================== BACK FACE (3D FLIP) ==================== -->
+          <div class="mtg-face mtg-face-back">
+            <div class="mtg-back-inner">
+              <div class="mtg-back-watermark">
+                <svg viewBox="0 0 200 200" width="180" height="180">
+                  <circle cx="100" cy="100" r="86" stroke="#e4b65a" stroke-width="3" fill="none"/>
+                  <circle cx="100" cy="100" r="68" stroke="#e4b65a" stroke-width="1.5" stroke-dasharray="6 4" fill="none"/>
+                  <polygon points="100,12 116,84 188,100 116,116 100,188 84,116 12,100 84,84" fill="#e4b65a"/>
+                </svg>
+              </div>
+
+              <div class="mtg-nameplate ${c.theme || ""}">
+                <div class="mtg-card-title">${c.name}</div>
+                <div class="mtg-mana-gem">${manaBadge}</div>
+              </div>
+
+              <div class="mtg-back-details">
+                <div><strong>⏳ Час створення:</strong> ${c.action}</div>
+                <div><strong>🎯 Дистанція / Зона:</strong> ${c.range}</div>
+                <div><strong>💎 Витрата ресурсу:</strong> ${c.costLabel}</div>
+                <div><strong>📜 Умови й деталі:</strong> ${c.back || "Немає особливих умов."}</div>
+                ${c.adv ? `<div style="color:var(--emerald);"><strong>▲ Перевага:</strong> ${c.adv}</div>` : ""}
+                ${c.dis ? `<div style="color:var(--danger);"><strong>▼ Перешкода:</strong> ${c.dis}</div>` : ""}
+              </div>
+
+              <div class="mtg-card-actions">
+                <button class="btn btn-gold btn-xs" onclick="toggleFlipCard('${c.id}')">↺ Повернути до опису</button>
+                <button class="btn btn-crimson btn-xs" ${(!status.canUse || isTurnLocked) ? "disabled" : ""} onclick="useSpellCard('${c.id}')">
+                  ✨ Застосувати
+                </button>
+              </div>
+            </div>
+
+            <div class="mtg-collector-bar">
+              <span>${c.collectorNum} • ЗВОРОТНИЙ БІК</span>
+              <span>${c.school}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function checkCardAvailability(c) {
+  const st = playerState;
+  if (!st) return { canUse: false, shortStatus: "" };
+
+  if (c.costType === "free") {
+    return { canUse: true, shortStatus: "0 комірок" };
+  }
+
+  if (c.costType === "ritual_or_slot") {
+    const s1 = st.slots[1] ? (st.slots[1].max - st.slots[1].used) : 0;
+    const s2 = st.slots[2] ? (st.slots[2].max - st.slots[2].used) : 0;
+    return {
+      canUse: true,
+      shortStatus: (s1 + s2 > 0) ? "Ритуал / 1 комірка" : "Ритуал (0 комірок)"
+    };
+  }
+
+  if (c.costType === "free_or_slot") {
+    const res = (st.resources || []).find(r => r.id === c.freeRes);
+    const freeLeft = res ? (res.max - res.used) : 0;
+    if (freeLeft > 0) {
+      return { canUse: true, shortStatus: `Безкоштовно (${freeLeft})` };
+    }
+    const minLvl = c.slotLevel || 1;
+    const s1 = minLvl <= 1 && st.slots[1] ? (st.slots[1].max - st.slots[1].used) : 0;
+    const s2 = st.slots[2] ? (st.slots[2].max - st.slots[2].used) : 0;
+    if (s1 + s2 > 0) {
+      return { canUse: true, shortStatus: s1 > 0 ? "1 комірка (I)" : "1 комірка (II)" };
+    }
+    return { canUse: false, shortStatus: "Вичерпано" };
+  }
+
+  if (c.costType === "slot") {
+    const minLvl = c.slotLevel || 1;
+    const s1 = minLvl <= 1 && st.slots[1] ? (st.slots[1].max - st.slots[1].used) : 0;
+    const s2 = st.slots[2] ? (st.slots[2].max - st.slots[2].used) : 0;
+    if (s1 > 0) return { canUse: true, shortStatus: "1 комірка I" };
+    if (s2 > 0) return { canUse: true, shortStatus: minLvl === 1 ? "1 комірка II (+)" : "1 комірка II" };
+    return { canUse: false, shortStatus: "Немає комірок" };
+  }
+
+  if (c.costType === "resource") {
+    const res = (st.resources || []).find(r => r.id === c.resId);
+    const left = res ? (res.max - res.used) : 0;
+    if (left > 0) return { canUse: true, shortStatus: `Заряди: ${left}/${res.max}` };
+    return { canUse: false, shortStatus: "Заряди вичерпано" };
+  }
+
+  return { canUse: true, shortStatus: c.costLabel || "" };
+}
+
+function finalizeCardCast(c, spentText, spentSlot = false) {
+  const deck = getPlayerDeck();
+  const st = playerState;
+
+  turnState.active = true;
+  if (c.action === "Дія" || c.action === "Ритуал / Дія") turnState.actionUsed = true;
+  if (c.action === "Бонусна дія") turnState.bonusUsed = true;
+  if (c.action === "Реакція") turnState.reactionUsed = true;
+  if (spentSlot) turnState.slotSpent = true;
+
+  // If a special unlocked combo card was just used, remove it from specialUnlocked so it cannot be spammed
+  if (turnState.specialUnlocked.includes(c.id)) {
+    turnState.specialUnlocked = turnState.specialUnlocked.filter(id => id !== c.id);
+  }
+
+  if (c.trigger && c.trigger.targets) {
+    turnState.specialUnlocked = Array.from(new Set([...turnState.specialUnlocked, ...c.trigger.targets]));
+  }
+
+  const banner = document.getElementById("comboBanner");
+  if (c.trigger) {
+    activeCombo = c.trigger;
+    document.getElementById("comboTitle").textContent = c.trigger.title;
+    document.getElementById("comboDesc").textContent = c.trigger.desc;
+    const chipsHtml = (c.trigger.targets || []).map(tid => {
+      const targetCard = deck.find(x => x.id === tid);
+      if (!targetCard) return "";
+      return `<button class="combo-jump-btn" onclick="focusCard('${tid}')">➔ ${targetCard.name} (${targetCard.action})</button>`;
+    }).join("");
+    document.getElementById("comboChips").innerHTML = chipsHtml;
+  } else {
+    activeCombo = { targets: turnState.specialUnlocked };
+    document.getElementById("comboTitle").textContent = `⚡ Хід активний після «${c.name}»`;
+    document.getElementById("comboDesc").textContent = "Дозволені в цей хід дії піднято наверх і підсвічено золотом. Решту заблоковано до завершення ходу.";
+    document.getElementById("comboChips").innerHTML = "";
+  }
+  banner.classList.remove("hidden");
+
+  renderSlotsAndResources();
+  renderTurnEconomyBar();
+  renderSpellCards();
+
+  const eventMsg = `застосував «${c.name}» (${c.action}) — ${spentText}.`;
+  showToast(`✨ ${c.name} (${spentText})`);
+  sendToGM({
+    type: "player_event",
+    actor: st.name,
+    message: eventMsg,
+    state: st
+  });
+}
+
+function useSpellCard(cardId) {
+  const now = Date.now();
+  if (now - lastActionTimestamp < 550) return;
+  lastActionTimestamp = now;
+
+  const deck = getPlayerDeck();
+  const c = deck.find(x => x.id === cardId);
+  if (!c || !playerState) return;
+
+  const turnCheck = isCardAllowedInCurrentTurn(c);
+  if (!turnCheck.allowed) {
+    showToast("🔒 " + turnCheck.reason);
+    return;
+  }
+
+  const st = playerState;
+
+  if (c.costType === "free") {
+    finalizeCardCast(c, "без витрати комірки", false);
+    return;
+  }
+
+  if (c.costType === "ritual_or_slot") {
+    const s1 = st.slots[1] ? (st.slots[1].max - st.slots[1].used) : 0;
+    const s2 = st.slots[2] ? (st.slots[2].max - st.slots[2].used) : 0;
+    if (s1 + s2 > 0 && !turnState.slotSpent) {
+      openChoiceDialog(
+        c.name,
+        "Створити заклинання швидко за 1 Дію (витратить 1 комірку) чи як Ритуал за 10 хвилин без комірки?",
+        "За Дію (1 комірка)",
+        "Як Ритуал (0 комірок)",
+        () => {
+          let spent = "";
+          if (s1 > 0) { st.slots[1].used++; spent = "витрачено комірку 1-го рівня"; }
+          else { st.slots[2].used++; spent = "витрачено комірку 2-го рівня"; }
+          finalizeCardCast(c, spent, true);
+        },
+        () => {
+          finalizeCardCast(c, "як Ритуал (без комірки)", false);
+        }
+      );
+      return;
+    } else {
+      finalizeCardCast(c, "як Ритуал (без комірки)", false);
+      return;
+    }
+  }
+
+  if (c.costType === "free_or_slot") {
+    const res = (st.resources || []).find(r => r.id === c.freeRes);
+    if (res && res.used < res.max) {
+      res.used++;
+      finalizeCardCast(c, `використано безкоштовний заряд (${res.name})`, false);
+      return;
+    }
+    const minLvl = c.slotLevel || 1;
+    if (minLvl <= 1 && st.slots[1] && st.slots[1].used < st.slots[1].max) {
+      st.slots[1].used++;
+      finalizeCardCast(c, "витрачено комірку 1-го рівня", true);
+      return;
+    }
+    if (st.slots[2] && st.slots[2].used < st.slots[2].max) {
+      st.slots[2].used++;
+      finalizeCardCast(c, "витрачено комірку 2-го рівня", true);
+      return;
+    }
+    showToast("Немає доступних комірок або зарядів!");
+    return;
+  }
+
+  if (c.costType === "slot") {
+    const minLvl = c.slotLevel || 1;
+    if (minLvl <= 1 && st.slots[1] && st.slots[1].used < st.slots[1].max) {
+      st.slots[1].used++;
+      finalizeCardCast(c, "витрачено комірку 1-го рівня", true);
+      return;
+    }
+    if (st.slots[2] && st.slots[2].used < st.slots[2].max) {
+      st.slots[2].used++;
+      finalizeCardCast(c, minLvl === 1 ? "витрачено комірку 2-го рівня (посилений ефект!)" : "витрачено комірку 2-го рівня", true);
+      return;
+    }
+    showToast("Немає вільних комірок цього рівня!");
+    return;
+  }
+
+  if (c.costType === "resource") {
+    const res = (st.resources || []).find(r => r.id === c.resId);
+    if (res && res.used < res.max) {
+      res.used++;
+      finalizeCardCast(c, `витрачено ресурс «${res.name}» (залишилось ${res.max - res.used}/${res.max})`, false);
+      return;
+    }
+    showToast("Заряди цього вміння вичерпано!");
+  }
+}
+
+function toggleCustomSpellForm() {
+  document.getElementById("customSpellForm").classList.toggle("hidden");
+}
+
+function addCustomCard() {
+  const name = document.getElementById("csName").value.trim();
+  const levelVal = document.getElementById("csLevel").value;
+  const action = document.getElementById("csAction").value;
+  const range = document.getElementById("csRange").value.trim() || "На себе";
+  const front = document.getElementById("csFront").value.trim();
+  const back = document.getElementById("csBack").value.trim();
+  const adv = document.getElementById("csAdv").value.trim();
+  const dis = document.getElementById("csDis").value.trim();
+
+  if (!name || !front) {
+    showToast("Вкажіть назву та опис картки.");
+    return;
+  }
+
+  let level = levelVal === "ability" ? "Уміння" : Number(levelVal);
+  let costType = levelVal === "0" ? "free" : (levelVal === "ability" ? "free" : "slot");
+  let slotLevel = levelVal === "2" ? 2 : 1;
+  let costLabel = levelVal === "0" ? "Без комірки" : (levelVal === "1" ? "1 комірка 1-го рівня" : (levelVal === "2" ? "1 комірка 2-го рівня" : "Без ліміту"));
+
+  playerState.customCards = playerState.customCards || [];
+  playerState.customCards.push({
+    id: "cust_" + Date.now(),
+    name,
+    en: "Власна карта",
+    level,
+    kind: levelVal === "ability" ? "ability" : "spell",
+    school: "Домашнє",
+    action,
+    range,
+    theme: "",
+    art: "holy",
+    rarity: "rare",
+    costType,
+    slotLevel,
+    costLabel,
+    front,
+    back,
+    adv,
+    dis
+  });
+
+  document.getElementById("csName").value = "";
+  document.getElementById("csFront").value = "";
+  document.getElementById("csBack").value = "";
+  document.getElementById("csAdv").value = "";
+  document.getElementById("csDis").value = "";
+  toggleCustomSpellForm();
+  renderSpellCards();
+  sendToGM({ type: "sync_player", state: playerState });
+  showToast("Нову картку додано до колоди!");
+}
+
+// ============================================================================
+// INVENTORY & COINS (ONLY ВІЇ & БЕСТІЇ)
+// ============================================================================
+
+function renderInventory() {
+  if (!playerState) return;
+  const c = playerState.coins || { viya: 0, bestia: 0 };
+  document.getElementById("coin-viya").value = c.viya || 0;
+  document.getElementById("coin-bestia").value = c.bestia || 0;
+
+  const grid = document.getElementById("invCardsGrid");
+  const items = playerState.inventory || [];
+  if (!items.length) {
+    grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:18px; color:var(--ink-muted); background:var(--parchment-base); border:1px dashed var(--border-brass); border-radius:7px;">Рюкзак порожній</div>`;
+    return;
+  }
+
+  grid.innerHTML = items.map((it, idx) => `
+    <div class="satchel-card">
+      <div>
+        <div class="satchel-head">
+          <div class="satchel-title">${it.consumable ? "🧪" : "🎒"} ${it.name}</div>
+          <span class="satchel-qty">${it.qty} шт.</span>
+        </div>
+        <div class="satchel-note" style="margin-top:4px;">${it.note || "Спорядження мандрівника"}</div>
+      </div>
+      <div class="satchel-footer">
+        <button class="btn btn-crimson btn-xs" onclick="useInvItem(${idx})">✨ Використати</button>
+        <div style="display:flex; gap:4px;">
+          <button class="btn btn-xs" onclick="incInvItem(${idx})" title="Додати +1">+1</button>
+          <button class="btn btn-xs" onclick="delInvItem(${idx})" title="Прибрати з рюкзака">✕</button>
+        </div>
+      </div>
+    </div>
+  `).join("");
+}
+
+function updateCoin(coinKey, val) {
+  playerState.coins[coinKey] = Math.max(0, val || 0);
+  sendToGM({ type: "sync_player", state: playerState });
+}
+
+function addInventoryItem() {
+  const name = document.getElementById("invNewName").value.trim();
+  const note = document.getElementById("invNewNote").value.trim();
+  const qty = Math.max(1, Number(document.getElementById("invNewQty").value) || 1);
+  const consumable = !!document.getElementById("invNewConsumable").checked;
+  if (!name) return;
+
+  playerState.inventory.push({ name, note, qty, consumable });
+  document.getElementById("invNewName").value = "";
+  document.getElementById("invNewNote").value = "";
+  document.getElementById("invNewQty").value = 1;
+  document.getElementById("invNewConsumable").checked = false;
+  renderInventory();
+  sendToGM({
+    type: "player_event",
+    actor: playerState.name,
+    message: `поклав у рюкзак: ${name} (${qty} шт.).`,
+    state: playerState
+  });
+}
+
+function useInvItem(idx) {
+  const it = playerState.inventory[idx];
+  if (!it) return;
+  const itemName = it.name;
+
+  if (it.consumable) {
+    it.qty -= 1;
+    if (it.qty <= 0) playerState.inventory.splice(idx, 1);
+    renderInventory();
+    showToast(`🧪 Використано: ${itemName}`);
+    sendToGM({
+      type: "player_event",
+      actor: playerState.name,
+      message: `використав витратний предмет: ${itemName}.`,
+      state: playerState
+    });
+  } else {
+    showToast(`🎒 Застосовано спорядження: ${itemName}`);
+    sendToGM({
+      type: "player_event",
+      actor: playerState.name,
+      message: `застосував спорядження: «${itemName}»${it.note ? " (" + it.note + ")" : ""}.`,
+      state: playerState
+    });
+  }
+}
+
+function incInvItem(idx) {
+  const it = playerState.inventory[idx];
+  if (!it) return;
+  it.qty += 1;
+  renderInventory();
+  sendToGM({ type: "sync_player", state: playerState });
+}
+
+function delInvItem(idx) {
+  playerState.inventory.splice(idx, 1);
+  renderInventory();
+  sendToGM({ type: "sync_player", state: playerState });
+}
+
+// ============================================================================
+// GM DASHBOARD & CONTROLS
+// ============================================================================
+
+function addGmLog(htmlMsg) {
+  const box = document.getElementById("gmLogBox");
+  const now = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  const div = document.createElement("div");
+  div.className = "chronicle-line";
+  div.innerHTML = `<span class="chronicle-ts">[${now}]</span>${htmlMsg}`;
+  box.prepend(div);
+}
+
+function clearLog() {
+  document.getElementById("gmLogBox").innerHTML = "";
+}
+
+function saveGmNotes() {
+  localStorage.setItem("prismerk_gm_notes", document.getElementById("gmSecretNotes").value);
+}
+
+function renderGmDashboard() {
+  const ids = Object.keys(gmPlayers);
+  document.getElementById("gmPlayerCount").textContent = ids.length;
+  document.getElementById("gmEmptyHint").classList.toggle("hidden", ids.length > 0);
+
+  const grid = document.getElementById("gmPlayersGrid");
+  grid.innerHTML = ids.map(pid => {
+    const p = gmPlayers[pid].state;
+    const s1Left = p.slots[1] ? (p.slots[1].max - p.slots[1].used) : 0;
+    const s1Max = p.slots[1] ? p.slots[1].max : 0;
+    const s2Left = p.slots[2] ? (p.slots[2].max - p.slots[2].used) : 0;
+    const s2Max = p.slots[2] ? p.slots[2].max : 0;
+
+    const resHtml = (p.resources || []).map(r =>
+      `<span style="font-size:11.5px; background:var(--parchment-aged); padding:2px 6px; border-radius:4px;">${r.name}: <strong>${r.max - r.used}/${r.max}</strong></span>`
+    ).join(" ");
+
+    return `
+      <div class="gm-hero-card">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+          <div>
+            <h3 style="font-size:21px; color:var(--crimson-dark);">${p.name}</h3>
+            <div style="font-size:12px; color:var(--ink-soft);">${p.race} • ${p.className} • КБ ${p.ac}</div>
+          </div>
+          <span style="font-size:11px; padding:2px 7px; border-radius:4px; background:${p.locked ? "#dff0e6" : "#fbe3ae"}; border:1px solid var(--border-brass);">
+            ${p.locked ? "🔒 Затверджено" : "🔓 Редагує"}
+          </span>
+        </div>
+
+        <div style="background:var(--parchment-base); border:1px solid var(--border-brass); border-radius:6px; padding:8px; margin-bottom:8px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span>Хіти: <strong style="font-size:17px; color:var(--crimson);">${p.curHp} / ${p.maxHp}</strong> ${p.tempHp > 0 ? `(+${p.tempHp} тимч.)` : ""}</span>
+            <div style="display:flex; gap:4px;">
+              <button class="btn btn-xs" onclick="gmChangeHp('${pid}', -5)">-5</button>
+              <button class="btn btn-xs" onclick="gmChangeHp('${pid}', -1)">-1</button>
+              <button class="btn btn-xs" onclick="gmChangeHp('${pid}', 1)">+1</button>
+              <button class="btn btn-xs" onclick="gmChangeHp('${pid}', 5)">+5</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="font-size:12.5px; margin-bottom:8px;">
+          <div>Комірки: <strong>1-й рів: ${s1Left}/${s1Max}</strong> ${s2Max > 0 ? `• <strong>2-й рів: ${s2Left}/${s2Max}</strong>` : ""}</div>
+          <div style="display:flex; flex-wrap:wrap; gap:4px; margin-top:5px;">${resHtml}</div>
+        </div>
+
+        <div style="display:flex; flex-wrap:wrap; gap:5px; padding-top:6px; border-top:1px solid #d5be96;">
+          <button class="btn btn-xs" onclick="gmRestoreOneSlot('${pid}')">+1 Комірка</button>
+          <button class="btn btn-xs" onclick="gmPlayerRest('${pid}', 'short')">⛺ Короткий</button>
+          <button class="btn btn-emerald btn-xs" onclick="gmPlayerRest('${pid}', 'long')">🌙 Тривалий</button>
+          <button class="btn btn-xs" onclick="gmToggleLock('${pid}')">${p.locked ? "🔓 Розблокувати" : "🔒 Закрити"}</button>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function sendPatchToPlayer(pid, patch, notice) {
+  const entry = gmPlayers[pid];
+  if (!entry) return;
+  Object.assign(entry.state, patch);
+  renderGmDashboard();
+  const conn = playerConns[pid];
+  if (conn && conn.open) {
+    conn.send({ type: "gm_patch", patch, notice });
+  }
+}
+
+function gmChangeHp(pid, delta) {
+  const p = gmPlayers[pid]?.state;
+  if (!p) return;
+  let newCur = p.curHp;
+  let newTemp = p.tempHp || 0;
+
+  if (delta < 0) {
+    let dmg = Math.abs(delta);
+    if (newTemp > 0) {
+      const absorbed = Math.min(newTemp, dmg);
+      newTemp -= absorbed;
+      dmg -= absorbed;
+    }
+    newCur = Math.max(0, newCur - dmg);
+  } else {
+    newCur = Math.min(p.maxHp, newCur + delta);
+  }
+
+  sendPatchToPlayer(pid, { curHp: newCur, tempHp: newTemp }, `ХП змінено (${delta > 0 ? "+" + delta : delta}) -> ${newCur}/${p.maxHp}`);
+  addGmLog(`ГМ змінив ХП для <strong>${p.name}</strong> (${delta > 0 ? "+" + delta : delta}) → ${newCur}/${p.maxHp}`);
+}
+
+function gmRestoreOneSlot(pid) {
+  const p = gmPlayers[pid]?.state;
+  if (!p) return;
+  const slots = JSON.parse(JSON.stringify(p.slots));
+  if (slots[1] && slots[1].used > 0) slots[1].used--;
+  else if (slots[2] && slots[2].used > 0) slots[2].used--;
+  else {
+    showToast("Усі комірки вже повні.");
+    return;
+  }
+  sendPatchToPlayer(pid, { slots }, "ГМ відновив вам 1 комірку заклинань!");
+  addGmLog(`ГМ відновив 1 комірку для <strong>${p.name}</strong>.`);
+}
+
+function gmPlayerRest(pid, mode) {
+  const p = gmPlayers[pid]?.state;
+  if (!p) return;
+  const slots = JSON.parse(JSON.stringify(p.slots));
+  const resources = JSON.parse(JSON.stringify(p.resources || []));
+  let curHp = p.curHp;
+
+  if (mode === "short") {
+    resources.forEach(r => {
+      if (r.rest === "short" && r.used > 0) r.used = Math.max(0, r.used - 1);
+    });
+    sendPatchToPlayer(pid, { resources }, "Завершено Короткий відпочинок!");
+    addGmLog(`<strong>${p.name}</strong> завершив Короткий відпочинок.`);
+  } else {
+    curHp = p.maxHp;
+    if (slots[1]) slots[1].used = 0;
+    if (slots[2]) slots[2].used = 0;
+    resources.forEach(r => r.used = 0);
+    sendPatchToPlayer(pid, { curHp, tempHp: 0, slots, resources }, "Завершено Тривалий відпочинок: ХП та всі комірки відновлено!");
+    addGmLog(`<strong>${p.name}</strong> завершив Тривалий відпочинок (повне відновлення).`);
+  }
+}
+
+function gmPartyRest(mode) {
+  const ids = Object.keys(gmPlayers);
+  if (!ids.length) return;
+  ids.forEach(pid => gmPlayerRest(pid, mode));
+  showToast(mode === "long" ? "Тривалий відпочинок застосовано для всього загону!" : "Короткий відпочинок для всього загону!");
+}
+
+function gmToggleLock(pid) {
+  const p = gmPlayers[pid]?.state;
+  if (!p) return;
+  const next = !p.locked;
+  sendPatchToPlayer(pid, { locked: next }, next ? "ГМ заблокував редагування аркуша." : "ГМ дозволив редагувати аркуш!");
+}
+
+// ============================================================================
+// INITIATIVE TRACKER
+// ============================================================================
+
+function broadcastInitiative() {
+  renderInitiativeStrip();
+  Object.values(playerConns).forEach(c => {
+    if (c && c.open) c.send({ type: "initiative_update", list: initiativeOrder, turn: initiativeTurn });
+  });
+}
+
+function gmAddInit() {
+  const name = document.getElementById("gmInitName").value.trim();
+  const val = Number(document.getElementById("gmInitVal").value) || 0;
+  if (!name) return;
+  initiativeOrder.push({ name, val });
+  initiativeOrder.sort((a, b) => b.val - a.val);
+  document.getElementById("gmInitName").value = "";
+  document.getElementById("gmInitVal").value = "";
+  broadcastInitiative();
+}
+
+function gmNextTurn() {
+  if (!initiativeOrder.length) return;
+  initiativeTurn = (initiativeTurn + 1) % initiativeOrder.length;
+  broadcastInitiative();
+}
+
+function gmClearInit() {
+  initiativeOrder = [];
+  initiativeTurn = 0;
+  broadcastInitiative();
+}
+
+function renderInitiativeStrip() {
+  const strip = document.getElementById("initStrip");
+  const listEl = document.getElementById("initList");
+  if (!initiativeOrder.length) {
+    strip.classList.add("hidden");
+    return;
+  }
+  strip.classList.remove("hidden");
+  listEl.innerHTML = initiativeOrder.map((item, idx) => `
+    <span class="init-token ${idx === initiativeTurn ? "active-turn" : ""}">
+      ${idx === initiativeTurn ? "▶" : ""} ${item.name} <strong>(${item.val})</strong>
+    </span>
+  `).join("");
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  const r = params.get("room");
+  if (r) {
+    document.getElementById("joinRoomCode").value = r.toUpperCase();
+    showToast("Код кімнати " + r.toUpperCase() + " підставлено з посилання!");
+  }
+});
+</script>
+</body>
+</html>
